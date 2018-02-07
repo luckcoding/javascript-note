@@ -88,25 +88,25 @@ isNaN("some") | true
 
 除2取余，逆序排列。
 
-![10to2](10to2.png)
+![10to2](../asset/10to2.png)
 
 * 小数
 
 乘2取整，顺序排列。
 
-![10to2point](10to2point.png)
+![10to2point](../asset/10to2point.png)
 
 ##### 二进制转十进制
 
 按权相加。
 
-![2to10](2to10.png)
+![2to10](../asset/2to10.png)
 
 ### 精度
 
 JS所有的Number都是以64-bit的双精度浮点数存储(IEEE-754 64).
 
-![ieee-754-64](asset/ieee-754-64.jpeg)
+![ieee-754-64](../asset/ieee-754-64.jpeg)
 
 > 待研究: NaN 是怎么存储的?
 
@@ -207,3 +207,9 @@ var throttle = function (func, wait) {
   }
 }
 ```
+
+---
+
+### 线程与进程的区别
+
+一个程序至少有一个进程，一个进程至少有一个线程。JS只有一个线程。
