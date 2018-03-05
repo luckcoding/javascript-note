@@ -2,7 +2,7 @@
 
 ### [javascript Array](note/Array.md)
 
-### [javascript Function](note/Funtion.md)
+### [javascript Function](note/Function.md)
 
 ### 实例
 
