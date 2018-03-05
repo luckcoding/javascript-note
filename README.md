@@ -1,4 +1,8 @@
-## [javascript 基础](note/Base.md)
+### [javascript 基础](note/Base.md)
+
+### [javascript Array](note/Array.md)
+
+### [javascript Function](note/Funtion.md)
 
 ### 实例
 

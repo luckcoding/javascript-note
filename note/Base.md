@@ -21,22 +21,22 @@ ECMAscript 5 添加。
 
 ### 数据类型
 
-5 种简单数据类型：**undefined null Boolean Number String** 和 1 种复杂类型: **Object**.
+5 种简单数据类型：`undefined null Boolean Number String` 和 1 种复杂类型: `Object`.
 
-### typeof
+### `typeof`
 
 能够监测 `undefined boolean string number object function`
 
-### undefined 与 null
+### `undefined` 与 `null`
 
-* **undefined** 未初始化的变量
-* **null** 空对象指针
+* `undefined` 未初始化的变量
+* `null` 空对象指针
 
-> typeof null => "object"
+> `typeof null` => "object"
 
-* undefined 与 null 的值相等
+* `undefined` 与 `null` 的值相等
 
-> undefined == null => true
+> `undefined == null` => true
 
 ### true 与 false
 
@@ -60,7 +60,7 @@ undefined == null | true
 if (null){console.log(1)} | 不打印
 if (undefined){console.log(1)} | 不打印
 
-### NaN
+### `NaN`
 
 NaN 是一种特殊的 Number. 且 NaN 不与任何值相等，包括 NaN 本身.
 
@@ -68,7 +68,7 @@ NaN 是一种特殊的 Number. 且 NaN 不与任何值相等，包括 NaN 本身
 
 > NaN == NaN => false
 
-### isNaN()
+### `isNaN()`
 
 接受任意一个类型的参数，尝试转换为数值。
 
@@ -78,11 +78,11 @@ isNaN(NaN) | true
 isNaN('10') | false
 isNaN("some") | true
 
-### Infinity
+### `Infinity`
 
-特殊的 Number 型， 表示无穷大。用0作除数会产生。
+特殊的 `Number` 型， 表示无穷大。用0作除数会产生。
 
-> 3 / 0 => Infinity
+> `3 / 0` => Infinity
 
 ### self == self ?
 
@@ -189,8 +189,8 @@ JS所有的**数值**都是以64-bit的双精度浮点数存储(IEEE-754 64)。
 
 JS变量包含2种类型：**`基本类型值`**和**`引用类型值`**。**JS所有函数都是按值传递**。
 
-* 基本类型：undefined null blooean number string。可以操作保存在变量中的实际的值。
-* 引用类型：Object Array Date RegExp Function。值保存在内存对象里，不允许直接操作内存空间。*当复制保存对象的某个变量时，操作的是对象的引用。但为对象添加属性时，操作的是实际的对象。*
+* 基本类型：`undefined null blooean number string`。可以操作保存在变量中的实际的值。
+* 引用类型：`Object Array Date RegExp Function`。值保存在内存对象里，不允许直接操作内存空间。*当复制保存对象的某个变量时，操作的是对象的引用。但为对象添加属性时，操作的是实际的对象。*
 
 * 基本类型的值在内存中占固定大小的空间，被保存在栈内存中
 * 引用类型的值是对象，保存在堆内存中
@@ -205,16 +205,16 @@ JS变量包含2种类型：**`基本类型值`**和**`引用类型值`**。**JS�
 
 #### 延长作用域链
 
-1. try-catch语句的catch块
-2. with
+1. `try-catch`语句的`catch`块
+2. `with`
 
 
 ---
 
 ### instanceof 与 typeof
 
-* typeof。检测基本数据类型。
-* instanceof。检测引用类型。
+* `typeof`。检测基本数据类型。
+* `instanceof`。检测引用类型。
 
 ---
 
