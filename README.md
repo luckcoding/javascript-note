@@ -6,11 +6,15 @@
 
 ### [javascript 对象](note/对象.md)
 
+### [BOM](note/BOM.md)
 ---
 
 ### 解答
 
 * [在浏览器中输入url后发生了什么](note/problems/what-really-happens-when-you-navigate-to-a-url.md)
+* [线程与进程的区别](note/problems/README.md#线程与进程的区别)
+* [函数防抖](note/problems/README.md#函数防抖)
+* [函数节流](note/problems/README.md#函数节流)
 
 ---
 
