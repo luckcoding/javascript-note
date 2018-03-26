@@ -56,7 +56,7 @@ console.log(fn1()) => undefined
 * `length`。接受参数的个数。
 * `prototype`。对**引用类型**而言，`prototype`是*保存所有实力方法*的真正所在。**不可枚举**，因此不能用`for-in`。
 
-#### `apply``call`
+#### `apply`,`call`
 
 在特定的作用域中调用函数，实际上等同于设置函数体内的`this`对象的值。
 

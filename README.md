@@ -4,6 +4,16 @@
 
 ### [javascript Function](note/Function.md)
 
+### [javascript 对象](note/对象.md)
+
+---
+
+### 解答
+
+* [在浏览器中输入url后发生了什么](note/problems/what-really-happens-when-you-navigate-to-a-url.md)
+
+---
+
 ### 实例
 
 * [纯css实现幻灯片效果](code/prue-css-silder-1.html)
@@ -18,3 +28,7 @@
 4. promise和async/await
 5. map/reduce/filter/find这些常用的函数 
 6.  PWA
+7. JS手写二分搜索算法
+8. 实现一个Lazyman
+9. 用JS代码求出页面上一个元素的最终的background-color，不考虑IE浏览器，不考虑元素float情况。
+10. 前端优化的手段有哪些？
