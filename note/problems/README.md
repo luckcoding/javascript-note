@@ -1,8 +1,70 @@
+<a id="clearfix"></a>
+
+### 不同的清除浮动的技巧
+
+* 1. 添加新元素
+
+```
+<div class="outer">
+  <div class="div1"></div>
+  <div class="div2"></div>
+  <div class="div3"></div>
+  <div class="clearfix"></div>
+</div>
+
+.clearfix {
+ clear: both
+}
+
+```
+
+* 2. 为父元素增加样式
+
+```
+<div class="clearfix">
+  <div class="div1"></div>
+  <div class="div2"></div>
+  <div class="div3"></div>
+</div>
+
+.clearfix {
+  overflow: auto;
+  zoom: 1; // 处理兼容性
+}
+```
+
+* 3. :after 伪元素烦那个发（作用于父元素）
+
+```
+<div class="outer">
+  <div class="div1"></div>
+  <div class="div2"></div>
+  <div class="div3"></div>
+</div>
+
+.outer {
+  zoom: 1;
+  &:after {
+    display: block;
+    height: 0;
+    clear: both;
+    content: '';
+    visibility: hidden;
+  }
+}
+```
+
+---
+
 <a id="线程与进程的区别"></a>
 
-### 线程与进程的区别
+### 线程与进程的区别，什么是线程同步
 
-一个程序至少有一个进程，一个进程至少有一个线程。JS只有一个线程。
+* 一个程序至少有一个进程，一个进程至少有一个线程。线程的划分尺度小于进程，使得多线程程序的并发性高。
+* JS只有一个线程。
+* 进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大地提高了程序的运行效率。
+* 线程在执行过程中与进程还是有区别的。每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。
+* 从逻辑角度来看，多线程的意义在于一个应用程序中，有多个执行部分可以同时执行。但操作系统并没有将多个线程看做多个独立的应用，来实现进程的调度和管理以及资源分配。这就是进程和线程的重要区别。
 
 <a id="函数防抖"></a>
 
@@ -103,3 +165,443 @@ var throttle = function (func, wait) {
 ```
 
 ---
+
+<a id="tree"></a>
+
+> 数据源
+
+```
+[{
+	"name": "1",
+	"children": [{
+		"name": "1-1",
+		"children": [{
+			"name": "1-1-1"
+		}, {
+			"name": "1-1-2"
+		}]
+	}, {
+		"name": "1-2",
+		"children": [{
+			"name": "1-2-1"
+		}]
+	}]
+}, {
+	"name": "2"
+}, {
+	"name": "3",
+	"children": [{
+		"name": "3-1"
+	}, {
+		"name": "3-2",
+		"children": [{
+			"name": "3-2-1"
+		}, {
+			"name": "3-2-2"
+		}]
+	}]
+}]
+```
+
+<a id="广度优先遍历"></a>
+
+### 广度优先遍历
+
+![bsf](../../asset/bfs.png)
+
+[数据源](#tree)
+
+```
+function doBFS(source) {
+  const dataSource = JSON.parse(JSON.stringify(source))
+  let stack = [...dataSource]
+  let item
+  while (stack.length) {
+    item = stack.shift()
+    
+    console.log(item.name)
+
+    if (item.children && item.children.length) {
+      stack = stack.concat(item.children)
+    }
+  }
+}
+
+// 打印
+
+1
+2
+3
+1-1
+1-2
+3-1
+3-2
+1-1-1
+1-1-2
+1-2-1
+3-2-1
+3-2-2
+```
+
+<a id="深度优先遍历"></a>
+
+### 深度优先遍历
+
+![dsf](../../asset/dfs.png)
+
+[数据源](#tree)
+
+```
+function doDFS(source) {
+  const dataSource = JSON.parse(JSON.stringify(source))
+  let stack = [...dataSource]
+  let item
+  while (stack.length) {
+    item = stack.shift()
+
+    console.log(item.name)
+
+    if (item.children && item.children.length) {
+      stack = item.children.concat(stack)
+    }
+  }
+}
+
+// 打印
+1
+1-1
+1-1-1
+1-1-2
+1-2
+1-2-1
+2
+3
+3-1
+3-2
+3-2-1
+3-2-2
+```
+
+<a id="递归遍历"></a>
+
+### 递归遍历
+
+[数据源](#tree)
+
+```
+function loop(source) {
+  const dataSource = JSON.parse(JSON.stringify(source))
+  let stack = [...dataSource]
+  for (let i = 0, len = dataSource.length; i < len; i++) {
+
+    console.log(dataSource[i].name)
+
+    const children = dataSource[i].children
+    if (children && children.length > 0) {
+      loop(children)
+    }
+  }
+}
+
+// 打印，同上深度优先遍历
+1
+1-1
+1-1-1
+1-1-2
+1-2
+1-2-1
+2
+3
+3-1
+3-2
+3-2-1
+3-2-2
+```
+
+---
+
+<a id="序列化"></a>
+
+### 序列化
+
+把对象转换为字节序列的过程称为对象的序列化。
+
+> 由于存在于内存中的对象都是暂时的，无法长期驻存，为了把对象的状态保持下来，这时需要把对象写入到磁盘或者其他介质中，这个过程就叫做序列化。
+
+### 反序列化
+
+把字节序列恢复为对象的过程称为对象的反序列化。
+
+---
+
+<a id="clone"></a>
+
+### 数组的浅拷贝
+
+```
+var arr = [1, 2, { n: 'xx' }]
+
+// 第一种 concat
+var new1 = arr.concat()
+
+// 第二种 slice
+var new2 = arr.slice()
+```
+
+### 浅拷贝
+
+```
+function shallowCopy(obj) {
+  // 判断是否是数组或者对象
+  if (typeof obj !== 'object') {
+    return
+  }
+
+  var newObj = obj instanceof Array ? [] : {}
+
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      newObj[key] = obj[key]
+    }
+  }
+
+  return newObj
+
+}
+```
+
+
+### 深拷贝
+
+#### JSON.parse 方法 （序列/反序列）
+
+`const newObj = JSON.parse(JSON.stringify(oldObj))`
+
+> JSON对象parse方法可以将JSON字符串反序列化成JS对象，stringify方法可以将JS对象序列化成JSON字符串
+
+##### 注意
+
+* 无法实现对函数、RegExp等特殊对象的克隆
+* 会抛弃对象的constructor,所有的构造函数会指向Object
+* 对象有循环引用,会报错
+
+#### 简单方法（不考虑特殊情况）
+
+```
+function deepCopy(obj) {
+  // 判断是否是数组或者对象
+  if (typeof obj !== 'object') {
+    return
+  }
+
+  var newObj = obj instanceof Array ? [] : {}
+
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key]
+    }
+  }
+
+  return newObj
+
+}
+```
+
+#### 够用的方法
+
+```
+function isType(input, type) {
+  return Object.prototype.toString.call(input).slice(8, -1) === type
+}
+
+function getRegExp(input) {
+  var flags = ''
+  if (input.global) {
+    flags += 'g'
+  }
+
+  if (input.ignoreCase) {
+    flags += 'i'
+  }
+
+  if (input.multiline) {
+    flags += 'm'
+  }
+
+  return flags
+}
+
+function deepClone(parent) {
+  var parents = []
+  var children = []
+
+  function _clone(parent) {
+    if (parent === null) {
+      return null
+    }
+
+    if (typeof parent !== 'object') {
+      return parent
+    }
+
+    var child, proto;
+
+    if (isType(parent, 'Array')) {
+      child = []
+    } else if (isType(parent, 'RegExp')) {
+      // 对正则对象做特殊处理
+      child = new RegExp(parent.source, getRegExp(parent))
+      if (parent.lastIndex) {
+        child.lastIndex = parent.lastIndex
+      }
+    } else if (isType(parent, 'Date')) {
+      // 对Date对象做特殊处理
+      child = new Date(parent.getTime())
+    } else {
+      // 处理对象原型
+      proto = Object.getPrototypeOf(parent)
+      // 利用Object.create切断原型链
+      child = Object.create(proto)
+    }
+
+    const index = parents.indexOf(parent)
+
+    if (index !== -1) {
+      return children[index]
+    }
+
+    parents.push(parent)
+
+    children.push(child)
+
+    for (var i in parent) {
+      child[i] = _clone(parent[i])
+    }
+
+    return child
+  }
+
+  return _clone(parent)
+}
+```
+
+* 测试代码
+
+```
+function person(pname) {
+  this.name = pname;
+}
+
+const Messi = new person('Messi');
+
+function say() {
+  console.log('hi');
+}
+
+const oldObj = {
+  a: say,
+  c: new RegExp('ab+c', 'i'),
+  d: Messi,
+};
+
+oldObj.b = oldObj;
+
+
+const newObj = clone(oldObj);
+console.log(newObj.a, oldObj.a); // [Function: say] [Function: say]
+console.log(newObj.b, oldObj.b); // { a: [Function: say], c: /ab+c/i, d: person { name: 'Messi' }, b: [Circular] } { a: [Function: say], c: /ab+c/i, d: person { name: 'Messi' }, b: [Circular] }
+console.log(newObj.c, oldObj.c); // /ab+c/i /ab+c/i
+console.log(newObj.d.constructor, oldObj.d.constructor); // [Function: person] [Function: person]
+```
+
+### 重点阅读(代码来源)
+
+* [面试官:请你实现一个深克隆](https://juejin.im/post/5abb55ee6fb9a028e33b7e0a)
+
+---
+
+<a id="unique"></a>
+
+### 数组去重
+
+* `filter` + `indexOf`
+
+```
+function unique(arr) {
+  var res = arr.filter(function (item, index, array) {
+    // 如果当前下标与数组内找到当前值的下标不等，则排除
+    return array.indexOf(item) === index
+  })
+  return res
+}
+```
+
+* `filter` + `sort`
+
+```
+function unique(arr) {
+  return arr.concat().sort().filter(function (item, index, array) {
+    // 按顺序排序，如果当前值与前一个值相等，则排除
+    return !index || item !== array[index - 1]
+  })
+}
+```
+
+* ES6
+
+```
+function unique(arr) {
+  return [...new Set(arr)]
+}
+```
+
+---
+
+<a id="max"></a>
+
+### 找出数组中的最大值
+
+* `reduce`
+
+```
+function max(arr) {
+  return arr.reduce(function (prev, next) {
+    return Math.max(prev, next)
+  })
+}
+```
+
+* apply
+
+```
+function max(arr) {
+  return Math.max.apply(null, arr)
+}
+```
+
+* ES6
+
+```
+function max(arr) {
+  return Math.max(...arr)
+}
+```
+
+---
+
+<a id="arrayrandom"></a>
+
+### 打乱数组
+
+```
+[].sort(function() {
+  return 0.5 - Math.random()
+})
+```
+
+---
+
+# 参考
+
+* [2017前端面试题及答案总结|掘金技术征文](https://juejin.im/post/59be99a0f265da0644289dde)
+* [常见前端面试题及答案](http://www.cnblogs.com/syfwhu/p/4434132.html#)
