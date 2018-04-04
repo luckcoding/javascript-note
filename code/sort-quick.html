@@ -12,22 +12,30 @@
 </html>
 
 <script>
-  var z = 10;
-  function foo() {
-    console.log(z)
-  }
-  (function (funArg) {
-    var z = 20;
-    funArg()
-  })(foo)
+var a = 100
 
-  var data = []
+function test() {
+  var b = 2 * a;
+  var a = 200;
+  var c = a / 2;
+  console.log(b)
+  console.log(c)
+}
 
-  for (var k = 0; k < 3; k++) {
-    data[k] = function () {
-      console.log(k)
+var tt = 'aa'
+function test() {
+  console.log(tt)
+  var tt = 'dd'
+  console.log(tt)
+}
+
+function duplicates(arr) {
+  var result = []
+  arr.forEach(function(item) {
+    if (arr.indexOf(item) !== arr.lastIndexOf(item) && result.indexOf(item) === -1) {
+      result.push(item)
     }
-  }
-
-  
+  })
+  return result
+}
 </script>

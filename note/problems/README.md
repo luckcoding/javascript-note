@@ -1117,6 +1117,14 @@ _LazyMan.prototype.sleepFirst = function(num) {
 
 ```
 
+<a id="nanNullUndefined"></a>
+
+### 几道关于null、NaN、undefined的试题
+
+```javascript
+
+```
+
 ---
 
 # 参考

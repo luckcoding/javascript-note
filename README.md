@@ -56,6 +56,7 @@
 * [二分搜索法](note/problems/README.md#binarySearch)
 * [LazyMan](note/problems/README.md#LazyMan)
 * [用JS代码求出页面上一个元素的最终的background-color，不考虑IE浏览器，不考虑元素float情况](note/problems/README.md#jsComputeBgColor)
+* [几道关于null、NaN、undefined的试题](note/problems/README.md#nanNullUndefined)
 
 ---
 
