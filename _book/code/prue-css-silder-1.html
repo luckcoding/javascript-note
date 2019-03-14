@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>幻灯片</title>
+  <style>
+    div {
+      width: 400px;
+      height: 300px;
+      overflow: hidden;
+      margin: 20px auto;
+    }
+
+    ul {
+      width: 1600px;
+    }
+
+    li {
+      width: 400px;
+      overflow: hidden;
+      float: left;
+      list-style: none;
+      animation: slide 6s infinite;
+    }
+
+    img {
+      width: 100%;
+      height: 300px;
+    }
+
+    @keyframes slide {
+      0% {
+        transform: translateX(0px);
+      }
+
+      25% {
+        transform: translateX(-400px);
+      }
+
+      50% {
+        transform: translateX(-800px);
+      }
+
+      75% {
+        transform: translateX(-1200px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <ul>
+      <li><img src="../asset/silder1.png" alt=""></li>
+      <li><img src="../asset/silder2.png" alt=""></li>
+      <li><img src="../asset/silder3.png" alt=""></li>
+      <li><img src="../asset/silder4.png" alt=""></li>
+    </ul>
+  </div>  
+</body>
+</html>

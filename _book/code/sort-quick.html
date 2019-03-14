@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>快速排序</title>
+</head>
+<body>
+  <div>
+    
+  </div>
+</body>
+</html>
+
+<script>
+var a = 100
+
+function test() {
+  var b = 2 * a;
+  var a = 200;
+  var c = a / 2;
+  console.log(b)
+  console.log(c)
+}
+
+var tt = 'aa'
+function test() {
+  console.log(tt)
+  var tt = 'dd'
+  console.log(tt)
+}
+
+function duplicates(arr) {
+  var result = []
+  arr.forEach(function(item) {
+    if (arr.indexOf(item) !== arr.lastIndexOf(item) && result.indexOf(item) === -1) {
+      result.push(item)
+    }
+  })
+  return result
+}
+</script>
