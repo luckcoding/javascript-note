@@ -66,10 +66,6 @@ xhr.getAllResponseHeaders()
 xhr.getResponseHeader('xx')
 ```
 
-### 参考
-
-[你真的会使用XMLHttpRequest吗？](https://segmentfault.com/a/1190000004322487)
-
 ### 指定`xhr.response`的数据类型
 
 `xhr.responseType`
@@ -192,6 +188,15 @@ function update (e) {
 `onabort` | `xhr.abort()`
 `ontimeout` | 
 `onerror` |
+
+### 参考
+
+[你真的会使用XMLHttpRequest吗？](https://segmentfault.com/a/1190000004322487)
+
+
+<a id="ajax"></a>
+
+## ajax
 
 
 

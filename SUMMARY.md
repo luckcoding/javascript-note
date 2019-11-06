@@ -2,6 +2,8 @@
 
 * [Introduction](README.md)
 
+* [JavaScript 权威指南](note/TheDefinitiveGuide.md)
+
 * 基础
   * [严格模式](note/basis.md#严格模式)
   * [数据类型](note/basis.md#数据类型)
@@ -14,6 +16,8 @@
   * [作用域](note/basis.md#作用域)
   * [instanceof 与 typeof](note/basis.md#instanceof与typeof)
 
+* 算法
+  * [时间复杂度](note/algorithm.md)
 
 * 考题
   * [算法](question/algorithm.md#summary)
@@ -34,11 +38,13 @@
   * [css3新增属性]()
   * [一像素边框](note/problems/README.md#oneBorder)
   * [形成BFC(Block Formatting Context)的几种方式](note/problems/README.md#BFC)
-  * [圣杯布局、双飞翼布局、Flex布局和绝对定位布局的几种经典布局的具体实现示例]()
+  * [圣杯布局、双飞翼布局、Flex布局和绝对定位布局的几种经典布局的具体实现示例](note/layout.md#layout-1)
   * [列举不同的清除浮动的技巧](note/problems/README.md#clearfix)
   * [在浏览器中输入url后发生了什么](note/problems/what-really-happens-when-you-navigate-to-a-url.md)
   * [线程与进程的区别，什么是线程同步](note/problems/README.md#线程与进程的区别)
   * [async与defer区别](note/problems/README.md#asyncDefer)
+  * [location.replace()与localtion.assign()区别]()
+  * [new操作符](note/problems.md#new)
   * [函数防抖](note/problems/README.md#函数防抖)
   * [函数节流](note/problems/README.md#函数节流)
   * [广度优先遍历](note/problems/README.md#广度优先遍历)
@@ -58,7 +64,11 @@
 
 * React
 
+* 规范
+  * [AMD CMD CommonJS]()
+
 * HTTP/TCP
+  * HTTP
   * HTTPS
   * Ajax
   * [XMLHttpRequest](note/HTTP.md#XMLHttpRequest)
