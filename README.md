@@ -1,5 +1,5 @@
 # JavaScript 笔记
 
-#### Run
+## 运行
 
 `$ gitbook serve`
