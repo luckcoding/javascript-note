@@ -2,7 +2,7 @@
 
 JavaScript 采用`Unicode`字符集编写。
 
-## 值的类型
+## 类型
 
 * 原始类型：`number`、`string`、`boolean`、`null`、`undefined`、`symbol`
 * 引用类型： `object`
@@ -28,7 +28,7 @@ JavaScript 采用`Unicode`字符集编写。
 * `null`：描述“空值”，特殊的对象。`typeof null => 'object'`
 * `undefined`：描述“未定义”。`typeof undefined => 'undefined'`
 
-## 值的类型转换
+## 类型转换
 
 除了`null`和`undefined`，JavaScript 的任何其他值均包含`toString()`和`valueOf()`方法
 
@@ -44,11 +44,19 @@ JavaScript 采用`Unicode`字符集编写。
 
 ## 作用域与作用域链
 
-作用域是指代码的执行环境，当代码在一个环境中执行时，会创建变量对象的**作用域链**，作用域链构成为*当前执行环境的变量对象->外部->...->全局执行环境*。查找变量时（变量解析），按序查找链上的对象，如果最终都无法找到的话，则抛出`ReferenceError`。
+作用域是指代码的执行环境，当代码在一个环境中执行时，会创建变量对象的**作用域链**（一个可以按序检索的对象列表），作用域链构成为*当前执行环境的变量对象->外部->...->全局执行环境*。查找变量时（变量解析），按序查找链上的对象，如果最终都无法找到的话，则抛出`ReferenceError`。
 
 > ES5中当声明全局变量时，实际上是定义了顶层对象的属性，可`delete`删除。
 
-## 算术表达式
+## 运算符
+
+> 优先级由上至下
+
+运算符 | 操作 | 优先级
+----- | ----- | -----
+++ | 增增 | 
+-- ｜ 减减 | 
+- ｜ 求反 | 
 
 ### `+` 运算符
 
@@ -90,7 +98,7 @@ var a = "i"; ++a // 2
 
 > `NaN`与任何值（包括`NaN`）都不相等，所以`x!==x`可判断`x`是否为`NaN`
 
-### `==`
+### `==` 隐式转换
 
 * 如果2个值类型相同，参照`===`
 * 如果不同
@@ -100,10 +108,15 @@ var a = "i"; ++a // 2
 	* 对象与数字或字符串比较，则对象转化为原始值进行比较
 
 ```
-
+[] == 0 // true
+'' == 0 // true
+[] == false // true
+{} == {} // false
+{} == false // 异常 SyntaxError
+Infinity == Infinity // true
 ```
 
-##### 比较运算符 “<,>,<=,>=”
+### 比较运算符`<,>,<=,>=`
 
 * 如果操作数都是对象，则转换为原始值
 * 如果转换后2个都是字符串，则按照“字母表顺序”（16位unicode）进行比较
@@ -113,27 +126,26 @@ var a = "i"; ++a // 2
 ```
 11 < 3 // false
 "11" < 3 // => 11 < 3 => false
-"11" < "3" // 按字母表顺序比较 => true
 "abc" < 3 // => NaN < 3 => false
+"11" < "3" // 按字母表顺序比较 => true
+{} < 3 // NaN < 3 => false
+[] < 3 // 0 < 3 => true
 ```
 
-##### `in` 运算符
+### `in` 运算符
 
-如果右侧对象拥有一个名为左侧操作数值（字符串或者可转换为字符串）的属性名，则返回true。
+检测是否包含属性名（转化为`string`）。
 
 ```
-var a1 = { a: 1 };
-'a' in a1 // => true
-1 in a1 // false
-
-var a2 = [1, 2]
-"0" in a2 // => true
-2 in a2 // => a2['2'] => false
+var a1 = { a: 1, 2: 2 };
+'a' in a1 // a1['a'] => true
+1 in a1 // a1['1'] => false
+2 in a1 // true
 ```
 
-##### `instanceof` 运算符
+### `instanceof` 运算符
 
-如果左侧的对象是右侧类的实例，则返回true。（如果右侧不为函数，则跑抛异常）
+检测左侧对象是否为右侧类的实例，如果右侧不为函数，则抛`TypeError`。
 
 ```
 var d = new Date()
@@ -144,31 +156,15 @@ d instanceof Number // false
 
 ### 第5章 语句
 
-5.7.1 with语句
+5.7.1 `with`语句
 
-用于临时扩展作用域链（一个可以按序检索的对象列表）。
-
-```
-with (object) {
-	// 提升object至作用域链头部
-}
-```
+用于临时扩展作用域链。
 
 ```
-
-function demo() {
-	with (document.fprms[0]) {
-		input1.value = ''
-	}
+var o = { a: 1 }
+with (o) {
+	console.log(a) // => 1
 }
-
-=> 
-
-function demo() {
-	var f = document.fprms[0]
-	f.input1.value = ''
-}
-
 ```
 
 <a id="对象"></a>

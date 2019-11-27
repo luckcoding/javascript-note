@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>基础 · GitBook</title>
+        <title>函数柯里化实现 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -65,10 +65,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="TheDefinitiveGuide.html" />
+    <link rel="next" href="solution.html" />
     
-    
-    <link rel="prev" href="solution.html" />
     
 
     </head>
@@ -875,7 +873,7 @@
         
         
     
-        <li class="chapter active" data-level="5.1" data-path="basis.html">
+        <li class="chapter " data-level="5.1" data-path="basis.html">
             
                 <a href="basis.html">
             
@@ -1546,7 +1544,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >基础</a>
+        <a href=".." >函数柯里化实现</a>
     </h1>
 </div>
 
@@ -1561,75 +1559,136 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p><a id="&#x4E25;&#x683C;&#x6A21;&#x5F0F;"></a></p>
-<h2 id="&#x4E25;&#x683C;&#x6A21;&#x5F0F;">&#x4E25;&#x683C;&#x6A21;&#x5F0F;</h2>
+                                <p><a id="fetch&#x53D6;&#x6D88;"></a></p>
+<h2 id="fetch&#x53D6;&#x6D88;">fetch&#x53D6;&#x6D88;</h2>
+<p><code>AbortController</code>&#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x63A7;&#x5236;&#x5668;&#x5BF9;&#x8C61;&#xFF0C;&#x5141;&#x8BB8;&#x5728;&#x9700;&#x8981;&#x65F6;&#x7EC8;&#x6B62;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;DOM&#x8BF7;&#x6C42;&#x3002;</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ajax</span> (<span class="hljs-params">options = {}</span>) </span>{
+     <span class="hljs-keyword">const</span> { url, timeout, ...opts } = options
+
+     <span class="hljs-keyword">let</span> promises = [fetch(url, opts)]
+
+     <span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">new</span> AbortController()
+     <span class="hljs-keyword">const</span> { signal } = controller
+     <span class="hljs-keyword">const</span> TIMEOUT = <span class="hljs-keyword">new</span> Response(<span class="hljs-string">&apos;timeout&apos;</span>, { status: <span class="hljs-number">504</span>, statusText: <span class="hljs-string">&apos;timeout&apos;</span> })
+
+     <span class="hljs-keyword">if</span> (timeout) {
+          promises.push(() =&gt; <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(resolve =&gt; {
+               setTimeout(() =&gt; {
+                    resolve(TIMEOUT)
+                    controller.abort()
+               }, timeout)
+          }))
+     }
+
+     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.race(promises)
+}
+</code></pre>
+<hr>
+<p><a id="&#x51FD;&#x6570;&#x67EF;&#x91CC;&#x5316;&#x5B9E;&#x73B0;"></a></p>
+<h2 id="&#x51FD;&#x6570;&#x67EF;&#x91CC;&#x5316;&#x5B9E;&#x73B0;">&#x51FD;&#x6570;&#x67EF;&#x91CC;&#x5316;&#x5B9E;&#x73B0;</h2>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">curry</span> (<span class="hljs-params">fn</span>) </span>{
+     <span class="hljs-keyword">var</span> len = fn.length <span class="hljs-comment">// &#x5F62;&#x53C2;&#x4E2A;&#x6570;</span>
+     <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">currying</span> (<span class="hljs-params"></span>) </span>{
+          <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>)
+          <span class="hljs-keyword">if</span> (args.length &gt;= len) {
+               <span class="hljs-keyword">return</span> fn.apply(<span class="hljs-literal">null</span>, args)
+          } <span class="hljs-keyword">else</span> {
+               <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                    <span class="hljs-keyword">var</span> args2 = <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>)
+                    <span class="hljs-keyword">return</span> currying.apply(<span class="hljs-literal">null</span>, args.concat(args2))
+               }
+          }
+     }
+}
+</code></pre>
+<hr>
+<p><a id="&#x8BF7;&#x6C42;&#x5E76;&#x53D1;"></a></p>
+<h2 id="&#x8BF7;&#x6C42;&#x5E76;&#x53D1;">&#x8BF7;&#x6C42;&#x5E76;&#x53D1;</h2>
+<p>function request(urls, maxNumber, callback) &#x8981;&#x6C42;&#x7F16;&#x5199;&#x51FD;&#x6570;&#x5B9E;&#x73B0;&#xFF0C;&#x6839;&#x636E;urls&#x6570;&#x7EC4;&#x5185;&#x7684;url&#x5730;&#x5740;&#x8FDB;&#x884C;&#x5E76;&#x53D1;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#xFF0C;&#x6700;&#x5927;&#x5E76;&#x53D1;&#x6570;maxNumber,&#x5F53;&#x6240;&#x6709;&#x8BF7;&#x6C42;&#x5B8C;&#x6BD5;&#x540E;&#x8C03;&#x7528;callback&#x51FD;&#x6570;(&#x5DF2;&#x77E5;&#x8BF7;&#x6C42;&#x7F51;&#x7EDC;&#x7684;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;fetch api)</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">request</span>(<span class="hljs-params">urls = [], maxNumber = 1, callback</span>) </span>{
+     <span class="hljs-keyword">const</span> len = urls.length
+     <span class="hljs-keyword">let</span> index = <span class="hljs-number">0</span>
+     <span class="hljs-keyword">let</span> counter = <span class="hljs-number">0</span>
+
+     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_request</span> (<span class="hljs-params"></span>) </span>{
+          <span class="hljs-keyword">while</span> (index &lt; len &amp;&amp; maxNumber &gt; <span class="hljs-number">0</span>) {
+               maxNumber-- <span class="hljs-comment">// &#x4EFB;&#x52A1; -1</span>
+               fetch(urls[index++]).finally(() =&gt; {
+                    maxNumber++ <span class="hljs-comment">// &#x6267;&#x884C;&#x5B8C;&#x540E;&#x4EFB;&#x52A1;&#x6C60; +1</span>
+                    counter++
+                    <span class="hljs-keyword">if</span> (counter === len) {
+                         <span class="hljs-keyword">return</span> callback()
+                    } <span class="hljs-keyword">else</span> {
+                         _request()
+                    }
+               })
+          }
+     }
+     _request()
+}
+</code></pre>
+<hr>
+<p><a id="&#x9632;&#x6296;&#x548C;&#x8282;&#x6D41;"></a></p>
+<h2 id="&#x9632;&#x6296;&#x548C;&#x8282;&#x6D41;">&#x9632;&#x6296;&#x548C;&#x8282;&#x6D41;</h2>
+<h3 id="&#x9632;&#x6296;">&#x9632;&#x6296;</h3>
 <blockquote>
-<p><a href="http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode" target="_blank">Javascript &#x4E25;&#x683C;&#x6A21;&#x5F0F;&#x8BE6;&#x89E3;</a> </p>
+<p>&#x4F7F;&#x7528;&#x573A;&#x666F;: &#x8054;&#x60F3;&#x641C;&#x7D22;&#x65F6;&#x907F;&#x514D;&#x7ACB;&#x5373;&#x89E6;&#x53D1;&#x67E5;&#x8BE2;.</p>
 </blockquote>
-<p><code>&quot;use strict&quot;;</code>&#x7528;&#x4E8E;&#x6D88;&#x9664;&#x7F3A;&#x9677;&#x8BED;&#x6CD5;</p>
-<ul>
-<li>&#x53D8;&#x91CF;&#x5FC5;&#x987B;&#x5148;&#x58F0;&#x660E;</li>
-<li>&#x7981;&#x6B62;&#x4F7F;&#x7528;<code>with</code>&#x8BED;&#x53E5;</li>
-<li>&#x521B;&#x5EFA;eval&#x4F5C;&#x7528;&#x57DF;</li>
-<li>&#x7981;&#x6B62;this&#x6307;&#x5411;&#x5168;&#x5C40;</li>
-<li>&#x7981;&#x6B62;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x904D;&#x5386;&#x8C03;&#x7528;&#x6808;</li>
-<li>&#x7981;&#x6B62;&#x5220;&#x9664;&#x53D8;&#x91CF;</li>
-</ul>
-<hr>
-<p><a id="&#x8FDB;&#x5236;"></a></p>
-<h2 id="&#x8FDB;&#x5236;">&#x8FDB;&#x5236;</h2>
-<h3 id="&#x5341;&#x8FDB;&#x5236;&#x8F6C;&#x4E8C;&#x8FDB;&#x5236;">&#x5341;&#x8FDB;&#x5236;&#x8F6C;&#x4E8C;&#x8FDB;&#x5236;</h3>
-<ul>
-<li>&#x6574;&#x6570;&#xFF1A;<strong>&#x9664;2&#x53D6;&#x4F59;&#xFF0C;&#x9006;&#x5E8F;&#x6392;&#x5217;</strong>&#x3002;</li>
-<li>&#x5C0F;&#x6570;&#xFF1A;<strong>&#x4E58;2&#x53D6;&#x6574;&#xFF0C;&#x987A;&#x5E8F;&#x6392;&#x5217;&#x3002;</strong></li>
-</ul>
-<p><img src="../asset/10to2.png" alt="10to2">
-<img src="../asset/10to2point.png" alt="10to2point"></p>
-<h3 id="&#x4E8C;&#x8FDB;&#x5236;&#x8F6C;&#x5341;&#x8FDB;&#x5236;">&#x4E8C;&#x8FDB;&#x5236;&#x8F6C;&#x5341;&#x8FDB;&#x5236;</h3>
-<p><strong>&#x6309;&#x6743;&#x76F8;&#x52A0;</strong></p>
-<p><img src="../asset/2to10.png" alt="2to10"></p>
-<hr>
-<p><a id="&#x4F4D;&#x64CD;&#x4F5C;"></a></p>
-<h2 id="&#x4F4D;&#x64CD;&#x4F5C;">&#x4F4D;&#x64CD;&#x4F5C;</h2>
-<h3 id="&#x6309;&#x4F4D;&#x975E;">&#x6309;&#x4F4D;&#x975E;<code>~</code></h3>
-<p><strong>&#x53D6;&#x8D1F;&#x6570;&#x51CF;1</strong></p>
-<pre><code>~111 =&gt; -111 - 1 =&gt; -112
-</code></pre><h3 id="&#x6309;&#x4F4D;&#x4E0E;">&#x6309;&#x4F4D;&#x4E0E;<code>&amp;</code></h3>
-<p>&#x4F4D;&#x5BF9;&#x9F50;&#x3001;&#x90FD;&#x4E3A;1&#x8FD4;&#x56DE;1&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE;0&#x3002;&#x5982;&#xFF1A;<code>25 &amp; 3 =&gt; 1</code></p>
-<p><img src="../asset/and.png" alt="and"></p>
-<h3 id="&#x6309;&#x4F4D;&#x6216;">&#x6309;&#x4F4D;&#x6216;<code>|</code></h3>
-<p>&#x4F4D;&#x5BF9;&#x9F50;&#x3001;&#x90FD;&#x4E3A;0&#x8FD4;&#x56DE;0&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE;1&#x3002;&#x5982;&#xFF1A;<code>25 | 3 =&gt; 27</code></p>
-<p><img src="../asset/or.png" alt="or"></p>
-<h3 id="&#x6309;&#x4F4D;&#x5F02;&#x6216;">&#x6309;&#x4F4D;&#x5F02;&#x6216;<code>^</code></h3>
-<p>&#x4F4D;&#x5BF9;&#x9F50;&#x3001;&#x53EA;&#x6709;&#x4E00;&#x4E2A;1&#x5219;&#x8FD4;&#x56DE;1&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE;0&#x3002;&#x5982;&#xFF1A;<code>25 ^ 3 =&gt; 26</code></p>
-<p><img src="../asset/xor.png" alt="xor"></p>
-<hr>
-<p><a id="&#x7CBE;&#x5EA6;"></a></p>
-<h2 id="&#x7CBE;&#x5EA6;">&#x7CBE;&#x5EA6;</h2>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">debounce</span> (<span class="hljs-params">func, time</span>) </span>{
+    <span class="hljs-keyword">let</span> timer = <span class="hljs-literal">null</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">if</span> (timeout) {
+            clearTimeout(timeout)
+        }
+        timeout = setTimeout(() =&gt; {
+            func.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>)
+        }, time)
+    }
+}
+</code></pre>
+<h3 id="&#x8282;&#x6D41;">&#x8282;&#x6D41;</h3>
 <blockquote>
-<p><a href="https://segmentfault.com/a/1190000009084877" target="_blank">&#x8BE5;&#x6B7B;&#x7684;IEEE-754&#x6D6E;&#x70B9;&#x6570;&#xFF0C;&#x8BF4;&#x300C;&#x7EA6;&#x300D;&#x5C31;&#x300C;&#x7EA6;&#x300D;&#xFF0C;&#x4F60;&#x7684;&#x5E95;&#x7EBF;&#x5462;&#xFF1F;&#x4EE5;JS&#x7684;&#x540D;&#x4E49;&#x6765;&#x597D;&#x597D;&#x67E5;&#x67E5;&#x4F60;</a></p>
+<p>&#x4F7F;&#x7528;&#x573A;&#x666F;: &#x6EDA;&#x52A8;&#x65F6;&#x89E6;&#x53D1;&#x63A5;&#x53E3;&#x8BF7;&#x6C42;.</p>
 </blockquote>
-<p>JS&#x6240;&#x6709;&#x7684;<strong>&#x6570;&#x503C;</strong>&#x90FD;&#x662F;&#x4EE5;64-bit&#x7684;&#x53CC;&#x7CBE;&#x5EA6;&#x6D6E;&#x70B9;&#x6570;&#x5B58;&#x50A8;(IEEE-754 64)&#x3002;</p>
-<p><img src="../asset/ieee-754-64.jpeg" alt="ieee-754-64"></p>
-<ul>
-<li>&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x64CD;&#x4F5C;64&#x4F4D;&#x7684;&#x503C;&#xFF0C;&#x800C;&#x662F;&#x5148;&#x8F6C;&#x6362;&#x6210;32&#x4F4D;&#x540E;&#xFF0C;&#x518D;&#x505A;&#x8FD0;&#x7B97;&#x3002;</li>
-</ul>
-<p><img src="../asset/ieee-754-32.jpg" alt="ieee-754-32"></p>
-<blockquote>
-<p>&#x5F85;&#x7814;&#x7A76;: <code>NaN</code>&#x662F;&#x600E;&#x4E48;&#x5B58;&#x50A8;&#x7684;?</p>
-</blockquote>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">throttle</span> (<span class="hljs-params">func, time</span>) </span>{
+    <span class="hljs-keyword">let</span> canRun = <span class="hljs-literal">true</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">if</span> (!canRun) {
+            <span class="hljs-keyword">return</span>
+        }
+        canRun = <span class="hljs-literal">false</span>
+        setTimeout(() =&gt; {
+            func.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>)
+            canRun = <span class="hljs-literal">true</span>
+        }, time)
+    }
+}
+</code></pre>
 <hr>
-<h2 id="&#x6808;&#x5185;&#x5B58;&#x4E0E;&#x5806;&#x5185;&#x5B58;">&#x6808;&#x5185;&#x5B58;&#x4E0E;&#x5806;&#x5185;&#x5B58;</h2>
-<ul>
-<li>&#x6808;&#xFF1A;&#x4E3A;&#x7F16;&#x8BD1;&#x5668;&#x81EA;&#x52A8;&#x5206;&#x914D;&#x548C;&#x91CA;&#x653E;</li>
-<li>&#x5806;&#xFF1A;&#x4E3A;&#x6210;&#x5458;&#x5206;&#x914D;&#x548C;&#x91CA;&#x653E;&#xFF0C;&#x7531;&#x7A0B;&#x5E8F;&#x5458;&#x81EA;&#x5DF1;&#x7533;&#x8BF7;&#x3001;&#x91CA;&#x653E;</li>
-</ul>
-<hr>
-<h2 id="&#x5EF6;&#x957F;&#x4F5C;&#x7528;&#x57DF;&#x94FE;">&#x5EF6;&#x957F;&#x4F5C;&#x7528;&#x57DF;&#x94FE;</h2>
-<ol>
-<li><code>try-catch</code>&#x8BED;&#x53E5;&#x7684;<code>catch</code>&#x5757;</li>
-<li><code>with</code></li>
-</ol>
+<p><a id="&#x6DF1;&#x62F7;&#x8D1D;"></a></p>
+<h2 id="&#x6DF1;&#x62F7;&#x8D1D;">&#x6DF1;&#x62F7;&#x8D1D;</h2>
+<pre><code class="lang-js"><span class="hljs-comment">// &#x65B9;&#x6CD5;&#x4E00;</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">deepClone</span>(<span class="hljs-params">arr</span>)</span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(<span class="hljs-built_in">JSON</span>.stringify(arr))
+}
+
+<span class="hljs-comment">// &#x65B9;&#x6CD5;&#x4E8C;</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">deepClone</span>(<span class="hljs-params">obj</span>) </span>{
+    <span class="hljs-keyword">var</span> newObj = <span class="hljs-built_in">Array</span>.isArray(obj) ? [] : {}
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> obj) {
+        <span class="hljs-keyword">if</span> (obj.hasOwnProperty(key)) {
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> obj[key] === <span class="hljs-string">&apos;object&apos;</span> &amp;&amp; obj[key] !== <span class="hljs-literal">null</span>) {
+                newObj[key] = deepClone(obj[key])
+            } <span class="hljs-keyword">else</span> {
+                newObj[key] = obj[key]
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> newObj
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1657,12 +1716,8 @@
 
             
                 
-                <a href="solution.html#请求并发" class="navigation navigation-prev " aria-label="Previous page: 请求并发">
-                    <i class="fa fa-angle-left"></i>
-                </a>
                 
-                
-                <a href="TheDefinitiveGuide.html" class="navigation navigation-next " aria-label="Next page: 基础">
+                <a href="solution.html#防抖和节流" class="navigation navigation-next navigation-unique" aria-label="Next page: 防抖和节流">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1673,7 +1728,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"基础","level":"5.1","depth":1,"next":{"title":"基础","level":"5.2","depth":1,"path":"note/TheDefinitiveGuide.md","ref":"note/TheDefinitiveGuide.md","articles":[]},"previous":{"title":"请求并发","level":"4.1.4.2","depth":3,"anchor":"#请求并发","path":"note/solution.md","ref":"note/solution.md#请求并发","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["back-to-top-button","theme-comscore","livereload"],"pluginsConfig":{"livereload":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-comscore":{},"back-to-top-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"note/basis.md","mtime":"2019-11-24T14:16:18.106Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-22T07:04:01.542Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"函数柯里化实现","level":"4.1.3.1","depth":3,"next":{"title":"防抖和节流","level":"4.1.3.2","depth":3,"anchor":"#防抖和节流","path":"note/solution.md","ref":"note/solution.md#防抖和节流","articles":[]},"previous":{"title":"方法","level":"4.1.3","depth":2,"ref":"","articles":[{"title":"函数柯里化实现","level":"4.1.3.1","depth":3,"anchor":"#函数柯里化实现","path":"note/solution.md","ref":"note/solution.md#函数柯里化实现","articles":[]},{"title":"防抖和节流","level":"4.1.3.2","depth":3,"anchor":"#防抖和节流","path":"note/solution.md","ref":"note/solution.md#防抖和节流","articles":[]},{"title":"深拷贝","level":"4.1.3.3","depth":3,"anchor":"#深拷贝","path":"note/problems/README.md","ref":"note/problems/README.md#深拷贝","articles":[]},{"title":"依赖注入实现","level":"4.1.3.4","depth":3,"anchor":"#依赖注入实现","path":"note/solution.md","ref":"note/solution.md#依赖注入实现","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["back-to-top-button","theme-comscore","livereload"],"pluginsConfig":{"livereload":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-comscore":{},"back-to-top-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"note/solution.md","mtime":"2019-11-27T15:21:39.885Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-22T07:04:01.542Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

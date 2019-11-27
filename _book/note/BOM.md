@@ -1,10 +1,10 @@
-### 含义
+## 含义
 
 浏览器对象模型。
 
-### window 对象
+## window 对象
 
-#### 获取页面视口大小
+### 获取页面视口大小
 
 ```
 var pageWidth = window.innerWidth,
@@ -20,7 +20,7 @@ if (typeof pageWidth !== 'number') {
 }
 ```
 
-### location 对象
+## location 对象
 
 既是window对象的属性，也是document对象的属性。`document.location === window.location`
 
@@ -35,26 +35,26 @@ port | 80 | 返回端口
 protocol | "http" | 返回协议
 search | "?query=js | 返回查询字符串，以"?"开头
 
-#### 位置操作
+### 位置操作
 
-##### 打开窗口的3种方法
-* **`location.href = "http://www.baidu.com"`**
+#### 打开窗口的3种方法
+* `location.href = "http://www.baidu.com"`
 * `location.assign("http://www.baidu.com")`
 * `window.location = "http://www.baidu.com"`
 
-##### 替换窗口
+#### 替换窗口
 * `location.replace("http://www.baidu.com/")`。**不生成历史记录**
 
-##### 重新加载
+#### 重新加载
 
 * `location.reload()`。重新加载（有可能从缓存中加载
 * `location.reload(true)`。重新加载（从服务器重新加载）
 
-### navigator 对象
+## navigator 对象
 
-### screen 对象
+## screen 对象
 
-### history 对象
+## history 对象
 
 例子 | 说明
 ------ | ------

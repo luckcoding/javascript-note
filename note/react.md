@@ -62,11 +62,11 @@ Component.prototype.forceUpdate = function(callback) {
 
 * **分层求异**对 tree diff 进行算法优化
 * 通过不同组件类型生成不同的树形结构，同时允许设置`shouldComponentUpdate()`对 component diff 进行优化
-* 通过**设置*唯一key*，对element diff进行算法优化
+* 通过**设置*唯一`key`*，对element diff进行算法优化
 
 ## 性能优化
 
-* 谨慎分配 `state`，避免不必要的 render
+* 谨慎分配 `state`，避免不必要的`render`
 * 状态合并
 * 使用纯函数式组件
 * 使用高阶组件替代继承
@@ -81,6 +81,15 @@ Component.prototype.forceUpdate = function(callback) {
 
 ## Fiber
 
-异步渲染UI
+异步渲染UI。组件渲染和更新时，React分为**调和阶段**和**渲染阶段**，调和阶段是采用递归遍历方式，无法中断。Fiber重新实现堆栈帧，将可中断的任务拆分成多个子任务。在`render`和`setState`的时候开始创建，在`requestIdleCallback`空闲时执行，从根节点遍历Fiber节点并构建任务树，然后生成`EffectList`进行更新DOM。
 
-## redux
+## Hook
+
+## getDerivedStateFromPros
+
+## 事件合成
+
+* 事件委托：把所有事件绑定到最外层，使用一个统一的事件监听器
+* 自动绑定：每个事件的上下文均指向所属组件
+
+## setState 机制

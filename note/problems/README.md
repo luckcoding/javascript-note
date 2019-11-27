@@ -1,125 +1,4 @@
-<a id="线程与进程的区别"></a>
 
-### 线程与进程的区别，什么是线程同步
-
-* 一个程序至少有一个进程，一个进程至少有一个线程。线程的划分尺度小于进程，使得多线程程序的并发性高。
-* JS只有一个线程。
-* 进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大地提高了程序的运行效率。
-* 线程在执行过程中与进程还是有区别的。每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。
-* 从逻辑角度来看，多线程的意义在于一个应用程序中，有多个执行部分可以同时执行。但操作系统并没有将多个线程看做多个独立的应用，来实现进程的调度和管理以及资源分配。这就是进程和线程的重要区别。
-
-
----
-
-<a id="asyncDefer"></a>
-
-### async与defer区别
-
-`<script async></script>`
-`<script defer></script>`
-
-异步(async) 脚本将在其加载完成后立即执行，而 延迟(defer) 脚本将等待 HTML 解析完成后，并按加载顺序执行。
-
-
----
-
-<a id="函数防抖"></a>
-
-### 函数防抖
-
-> 使用场景: 联想搜索时避免立即触发查询.
-
-```
-/*
- * func 要调用的函数
- * wait 防抖时间
- * immediate 布尔值,是否立即执行
- */
-var debounce = function (func, wait, immediate) {
-  // 定义一个判定时间
-  var timeout
-  return function () {
-    var context = this
-    var args = arguments
-
-    if (timeout) {
-      clearTimeout(timeout)
-    }
-
-    if (immediate) {
-      var callNow = !timeout
-      timeout = setTimeout(function () {
-        timeout = null
-      }, wait)
-
-      if (callNow) {
-        func.apply(context, args)
-      }
-    } else {
-      timeout = setTimeout(function () {
-        func.apply(context, args)
-      }, wait)
-    }
-  }
-}
-
-
-/**
- * ================
- * demo
- */
-var action = debounce(function () {
-  console.log(arguments)
-}, 1000);
-action() // 连续间隔1秒内执行，只会打印最后一次
-
-var action = debounce(function () {
-  console.log(arguments)
-}, 1000, true);
-action() // 连续间隔1秒内执行，只会打印第一次
-```
-
-<a id="函数节流"></a>
-
-### 函数节流
-
-> 使用场景: 滚动时触发接口请求.
-
-```
-/*
- * func 要调用的函数
- * wait 节流间隔时间
- */
-var throttle = function (func, wait) {
-  var timeout
-  var prevTime
-  return function () {
-    var nowTime = Date.now()
-    var context = this
-    var args = arguments
-    var remaining = wait - (nowTime - prevTime) // 剩余时间
-
-    if (remaining <= 0 || remaining > wait) {
-      if (timeout) {
-        clearTimeout(timeout)
-        timeout = null
-      }
-      prevTime = nowTime
-      func.apply(context, args)
-      if (!timeout) {
-        context = args = null
-      }
-    } else if (!timeout) {
-      timeout = setTimeout(function () {
-        prevTime = Date.now()
-        timeout = null
-        func.apply(context, args)
-      }, remaining)
-    }
-
-  }
-}
-```
 
 <a id="序列化"></a>
 
@@ -185,28 +64,6 @@ function shallowCopy(obj) {
 * 无法实现对函数、RegExp等特殊对象的克隆
 * 会抛弃对象的constructor,所有的构造函数会指向Object
 * 对象有循环引用,会报错
-
-#### 简单方法（不考虑特殊情况）
-
-```
-function deepCopy(obj) {
-  // 判断是否是数组或者对象
-  if (typeof obj !== 'object') {
-    return
-  }
-
-  var newObj = obj instanceof Array ? [] : {}
-
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key]
-    }
-  }
-
-  return newObj
-
-}
-```
 
 #### 够用的方法
 
@@ -344,43 +201,6 @@ Array.isArray([])
 
 ---
 
-<a id="unique"></a>
-
-### 数组去重
-
-* `filter` + `indexOf`
-
-```
-function unique(arr) {
-  var res = arr.filter(function (item, index, array) {
-    // 如果当前下标与数组内找到当前值的下标不等，则排除
-    return array.indexOf(item) === index
-  })
-  return res
-}
-```
-
-* `filter` + `sort`
-
-```
-function unique(arr) {
-  return arr.concat().sort().filter(function (item, index, array) {
-    // 按顺序排序，如果当前值与前一个值相等，则排除
-    return !index || item !== array[index - 1]
-  })
-}
-```
-
-* ES6
-
-```
-function unique(arr) {
-  return [...new Set(arr)]
-}
-```
-
----
-
 <a id="findArrDup"></a>
 
 ### 找出数组中重复出现过的元素
@@ -430,36 +250,8 @@ function max(arr) {
   return Math.max(...arr)
 }
 ```
-
 ---
 
-<a id="arrayrandom"></a>
-
-### 打乱数组
-
-```
-[].sort(function() {
-  return 0.5 - Math.random()
-})
-```
-
----
-
-<a id="flatten"></a>
-
-### 数组扁平化
-
-```
-function flatten(arr) {
-  while (arr.some(function (item) {
-    return Array.isArray(item)
-  })) {
-    arr = [].concat(...arr)
-  }
-
-  return arr
-}
-```
 
 ---
 
@@ -693,18 +485,3 @@ _LazyMan.prototype.sleepFirst = function(num) {
 ```
 
 ```
-
-<a id="nanNullUndefined"></a>
-
-### 几道关于null、NaN、undefined的试题
-
-```javascript
-
-```
-
----
-
-# 参考
-
-* [2017前端面试题及答案总结|掘金技术征文](https://juejin.im/post/59be99a0f265da0644289dde)
-* [常见前端面试题及答案](http://www.cnblogs.com/syfwhu/p/4434132.html#)

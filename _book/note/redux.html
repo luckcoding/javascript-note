@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>基础 · GitBook</title>
+        <title>redux · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -65,10 +65,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="TheDefinitiveGuide.html" />
     
-    
-    <link rel="prev" href="solution.html" />
+    <link rel="prev" href="mbox.md" />
     
 
     </head>
@@ -875,7 +873,7 @@
         
         
     
-        <li class="chapter active" data-level="5.1" data-path="basis.html">
+        <li class="chapter " data-level="5.1" data-path="basis.html">
             
                 <a href="basis.html">
             
@@ -1453,7 +1451,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6.5.4" data-path="redux.html">
+        <li class="chapter active" data-level="6.5.4" data-path="redux.html">
             
                 <a href="redux.html">
             
@@ -1546,7 +1544,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >基础</a>
+        <a href=".." >redux</a>
     </h1>
 </div>
 
@@ -1561,75 +1559,57 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <p><a id="&#x4E25;&#x683C;&#x6A21;&#x5F0F;"></a></p>
-<h2 id="&#x4E25;&#x683C;&#x6A21;&#x5F0F;">&#x4E25;&#x683C;&#x6A21;&#x5F0F;</h2>
-<blockquote>
-<p><a href="http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode" target="_blank">Javascript &#x4E25;&#x683C;&#x6A21;&#x5F0F;&#x8BE6;&#x89E3;</a> </p>
-</blockquote>
-<p><code>&quot;use strict&quot;;</code>&#x7528;&#x4E8E;&#x6D88;&#x9664;&#x7F3A;&#x9677;&#x8BED;&#x6CD5;</p>
-<ul>
-<li>&#x53D8;&#x91CF;&#x5FC5;&#x987B;&#x5148;&#x58F0;&#x660E;</li>
-<li>&#x7981;&#x6B62;&#x4F7F;&#x7528;<code>with</code>&#x8BED;&#x53E5;</li>
-<li>&#x521B;&#x5EFA;eval&#x4F5C;&#x7528;&#x57DF;</li>
-<li>&#x7981;&#x6B62;this&#x6307;&#x5411;&#x5168;&#x5C40;</li>
-<li>&#x7981;&#x6B62;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x904D;&#x5386;&#x8C03;&#x7528;&#x6808;</li>
-<li>&#x7981;&#x6B62;&#x5220;&#x9664;&#x53D8;&#x91CF;</li>
-</ul>
-<hr>
-<p><a id="&#x8FDB;&#x5236;"></a></p>
-<h2 id="&#x8FDB;&#x5236;">&#x8FDB;&#x5236;</h2>
-<h3 id="&#x5341;&#x8FDB;&#x5236;&#x8F6C;&#x4E8C;&#x8FDB;&#x5236;">&#x5341;&#x8FDB;&#x5236;&#x8F6C;&#x4E8C;&#x8FDB;&#x5236;</h3>
-<ul>
-<li>&#x6574;&#x6570;&#xFF1A;<strong>&#x9664;2&#x53D6;&#x4F59;&#xFF0C;&#x9006;&#x5E8F;&#x6392;&#x5217;</strong>&#x3002;</li>
-<li>&#x5C0F;&#x6570;&#xFF1A;<strong>&#x4E58;2&#x53D6;&#x6574;&#xFF0C;&#x987A;&#x5E8F;&#x6392;&#x5217;&#x3002;</strong></li>
-</ul>
-<p><img src="../asset/10to2.png" alt="10to2">
-<img src="../asset/10to2point.png" alt="10to2point"></p>
-<h3 id="&#x4E8C;&#x8FDB;&#x5236;&#x8F6C;&#x5341;&#x8FDB;&#x5236;">&#x4E8C;&#x8FDB;&#x5236;&#x8F6C;&#x5341;&#x8FDB;&#x5236;</h3>
-<p><strong>&#x6309;&#x6743;&#x76F8;&#x52A0;</strong></p>
-<p><img src="../asset/2to10.png" alt="2to10"></p>
-<hr>
-<p><a id="&#x4F4D;&#x64CD;&#x4F5C;"></a></p>
-<h2 id="&#x4F4D;&#x64CD;&#x4F5C;">&#x4F4D;&#x64CD;&#x4F5C;</h2>
-<h3 id="&#x6309;&#x4F4D;&#x975E;">&#x6309;&#x4F4D;&#x975E;<code>~</code></h3>
-<p><strong>&#x53D6;&#x8D1F;&#x6570;&#x51CF;1</strong></p>
-<pre><code>~111 =&gt; -111 - 1 =&gt; -112
-</code></pre><h3 id="&#x6309;&#x4F4D;&#x4E0E;">&#x6309;&#x4F4D;&#x4E0E;<code>&amp;</code></h3>
-<p>&#x4F4D;&#x5BF9;&#x9F50;&#x3001;&#x90FD;&#x4E3A;1&#x8FD4;&#x56DE;1&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE;0&#x3002;&#x5982;&#xFF1A;<code>25 &amp; 3 =&gt; 1</code></p>
-<p><img src="../asset/and.png" alt="and"></p>
-<h3 id="&#x6309;&#x4F4D;&#x6216;">&#x6309;&#x4F4D;&#x6216;<code>|</code></h3>
-<p>&#x4F4D;&#x5BF9;&#x9F50;&#x3001;&#x90FD;&#x4E3A;0&#x8FD4;&#x56DE;0&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE;1&#x3002;&#x5982;&#xFF1A;<code>25 | 3 =&gt; 27</code></p>
-<p><img src="../asset/or.png" alt="or"></p>
-<h3 id="&#x6309;&#x4F4D;&#x5F02;&#x6216;">&#x6309;&#x4F4D;&#x5F02;&#x6216;<code>^</code></h3>
-<p>&#x4F4D;&#x5BF9;&#x9F50;&#x3001;&#x53EA;&#x6709;&#x4E00;&#x4E2A;1&#x5219;&#x8FD4;&#x56DE;1&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE;0&#x3002;&#x5982;&#xFF1A;<code>25 ^ 3 =&gt; 26</code></p>
-<p><img src="../asset/xor.png" alt="xor"></p>
-<hr>
-<p><a id="&#x7CBE;&#x5EA6;"></a></p>
-<h2 id="&#x7CBE;&#x5EA6;">&#x7CBE;&#x5EA6;</h2>
-<blockquote>
-<p><a href="https://segmentfault.com/a/1190000009084877" target="_blank">&#x8BE5;&#x6B7B;&#x7684;IEEE-754&#x6D6E;&#x70B9;&#x6570;&#xFF0C;&#x8BF4;&#x300C;&#x7EA6;&#x300D;&#x5C31;&#x300C;&#x7EA6;&#x300D;&#xFF0C;&#x4F60;&#x7684;&#x5E95;&#x7EBF;&#x5462;&#xFF1F;&#x4EE5;JS&#x7684;&#x540D;&#x4E49;&#x6765;&#x597D;&#x597D;&#x67E5;&#x67E5;&#x4F60;</a></p>
-</blockquote>
-<p>JS&#x6240;&#x6709;&#x7684;<strong>&#x6570;&#x503C;</strong>&#x90FD;&#x662F;&#x4EE5;64-bit&#x7684;&#x53CC;&#x7CBE;&#x5EA6;&#x6D6E;&#x70B9;&#x6570;&#x5B58;&#x50A8;(IEEE-754 64)&#x3002;</p>
-<p><img src="../asset/ieee-754-64.jpeg" alt="ieee-754-64"></p>
-<ul>
-<li>&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x64CD;&#x4F5C;64&#x4F4D;&#x7684;&#x503C;&#xFF0C;&#x800C;&#x662F;&#x5148;&#x8F6C;&#x6362;&#x6210;32&#x4F4D;&#x540E;&#xFF0C;&#x518D;&#x505A;&#x8FD0;&#x7B97;&#x3002;</li>
-</ul>
-<p><img src="../asset/ieee-754-32.jpg" alt="ieee-754-32"></p>
-<blockquote>
-<p>&#x5F85;&#x7814;&#x7A76;: <code>NaN</code>&#x662F;&#x600E;&#x4E48;&#x5B58;&#x50A8;&#x7684;?</p>
-</blockquote>
-<hr>
-<h2 id="&#x6808;&#x5185;&#x5B58;&#x4E0E;&#x5806;&#x5185;&#x5B58;">&#x6808;&#x5185;&#x5B58;&#x4E0E;&#x5806;&#x5185;&#x5B58;</h2>
-<ul>
-<li>&#x6808;&#xFF1A;&#x4E3A;&#x7F16;&#x8BD1;&#x5668;&#x81EA;&#x52A8;&#x5206;&#x914D;&#x548C;&#x91CA;&#x653E;</li>
-<li>&#x5806;&#xFF1A;&#x4E3A;&#x6210;&#x5458;&#x5206;&#x914D;&#x548C;&#x91CA;&#x653E;&#xFF0C;&#x7531;&#x7A0B;&#x5E8F;&#x5458;&#x81EA;&#x5DF1;&#x7533;&#x8BF7;&#x3001;&#x91CA;&#x653E;</li>
-</ul>
-<hr>
-<h2 id="&#x5EF6;&#x957F;&#x4F5C;&#x7528;&#x57DF;&#x94FE;">&#x5EF6;&#x957F;&#x4F5C;&#x7528;&#x57DF;&#x94FE;</h2>
-<ol>
-<li><code>try-catch</code>&#x8BED;&#x53E5;&#x7684;<code>catch</code>&#x5757;</li>
-<li><code>with</code></li>
-</ol>
+                                <h2 id="&#x6E90;&#x7801;&#x5B9E;&#x73B0;">&#x6E90;&#x7801;&#x5B9E;&#x73B0;</h2>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createStore</span> (<span class="hljs-params">reducer</span>) </span>{
+    <span class="hljs-keyword">var</span> state
+    <span class="hljs-keyword">var</span> listeners = []
+    <span class="hljs-keyword">var</span> getState = () =&gt; state
+    <span class="hljs-keyword">var</span> dispatch = (action) =&gt; {
+        state = reducer(state, action)
+        listeners.forEach(l =&gt; l())
+    }
+    <span class="hljs-keyword">var</span> subscribe = (listener) =&gt; {
+        listeners.push(listener)
+    }
+    dispatch()
+    <span class="hljs-keyword">return</span> {
+        getState,
+        dispatch,
+        subscribe,
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">combineReducers</span> (<span class="hljs-params">reducers</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">state = {}, action = {}</span>) </span>{
+        <span class="hljs-keyword">let</span> newState = {}
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> reducers) {
+            newState[key] = reducers[key](state[key], action)
+        }
+        <span class="hljs-keyword">return</span> newState
+    }
+}
+</code></pre>
+<h2 id="&#x5F02;&#x6B65;&#x4E2D;&#x95F4;&#x4EF6;&#x539F;&#x7406;">&#x5F02;&#x6B65;&#x4E2D;&#x95F4;&#x4EF6;&#x539F;&#x7406;</h2>
+<pre><code class="lang-js"><span class="hljs-comment">// redux &#x4E2D;&#x95F4;&#x4EF6;</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compose</span>(<span class="hljs-params">...funcs</span>) </span>{
+    <span class="hljs-keyword">if</span> (funcs.length === <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> arg =&gt; arg
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (funcs.length === <span class="hljs-number">1</span>) {
+        <span class="hljs-keyword">return</span> funcs[<span class="hljs-number">0</span>]
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> funcs.reduce((a, b) =&gt; (...args) =&gt; a(b(...args)))
+    }
+}
+
+<span class="hljs-comment">// thunk</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">thunk</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> ({ dispatch, getState }) =&gt; next =&gt; action =&gt; {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> action === <span class="hljs-string">&apos;function&apos;</span>
+            ? action(dispatch, getState)
+            : next(action)
+        <span class="hljs-comment">// &#x5982;&#x679C;&#x4E0D;&#x662F;&#x51FD;&#x6570;&#xFF0C;&#x5C31;&#x6267;&#x884C;&#x4E0B;&#x4E00;&#x4E2A;&#x4E2D;&#x95F4;&#x4EF6;</span>
+    }
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1657,14 +1637,10 @@
 
             
                 
-                <a href="solution.html#请求并发" class="navigation navigation-prev " aria-label="Previous page: 请求并发">
+                <a href="mbox.md" class="navigation navigation-prev navigation-unique" aria-label="Previous page: mbox">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="TheDefinitiveGuide.html" class="navigation navigation-next " aria-label="Next page: 基础">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -1673,7 +1649,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"基础","level":"5.1","depth":1,"next":{"title":"基础","level":"5.2","depth":1,"path":"note/TheDefinitiveGuide.md","ref":"note/TheDefinitiveGuide.md","articles":[]},"previous":{"title":"请求并发","level":"4.1.4.2","depth":3,"anchor":"#请求并发","path":"note/solution.md","ref":"note/solution.md#请求并发","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["back-to-top-button","theme-comscore","livereload"],"pluginsConfig":{"livereload":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-comscore":{},"back-to-top-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"note/basis.md","mtime":"2019-11-24T14:16:18.106Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-22T07:04:01.542Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"redux","level":"6.5.4","depth":2,"next":{"title":"工具","level":"6.6","depth":1,"ref":"","articles":[{"title":"webpack","level":"6.6.1","depth":2,"anchor":"#webpack","path":"note/build.md","ref":"note/build.md#webpack","articles":[]},{"title":"AMD CMD CommonJS ES6","level":"6.6.2","depth":2,"anchor":"#AMD-CMD-CommonJS-ES6","path":"note/build.md","ref":"note/build.md#AMD-CMD-CommonJS-ES6","articles":[]}]},"previous":{"title":"mbox","level":"6.5.3","depth":2,"path":"note/mbox.md","ref":"note/mbox.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["back-to-top-button","theme-comscore","livereload"],"pluginsConfig":{"livereload":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-comscore":{},"back-to-top-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"note/redux.md","mtime":"2019-11-25T09:55:48.877Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-22T07:04:01.542Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

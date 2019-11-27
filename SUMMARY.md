@@ -1,47 +1,77 @@
 # Summary
-* [JavaScript 权威指南](note/TheDefinitiveGuide.md)
-  * [数组](note/TheDefinitiveGuide.md#数组)
-  * [函数](note/TheDefinitiveGuide.md#函数)
-  * [正则](note/TheDefinitiveGuide.md#正则)
+* CSS
+  * [盒子模型](note/CSS.md#盒子模型)
+  * [CSS选择器](note/CSS.md#CSS选择器)
+  * [position属性](note/CSS.md#position属性)
+  * [flex布局](note/CSS.md#flex布局)
+  * [em、rem、vw、vh](note/CSS.md#em、rem、vw、vh)
+  * [padding和margin的百分比](note/CSS.md#padding和margin的百分比)
+  * [垂直水平居中](note/CSS.md#垂直水平居中)
+  * [BFC](note/CSS.md#BFC)
+  * [清除浮动](note/CSS.md#清除浮动)
+  * [三栏布局（左中右、上中下）](note/CSS.md#三栏布局（左中右、上中下）)
+  * [三角形](note/CSS.md#三角形)
+  * [多行截断](note/CSS.md#多行截断)
+  * [一像素边框](note/CSS.md#一像素边框)
+
+
+* 浏览器与网络
+  * [从输入URL到呈现页面过程](note/browser.md#从输入URL到呈现页面过程)
+  * [缓存](note/browser.md#缓存)
+  * [OSI的七层体系结构](note/browser.md#OSI的七层体系结构)
+  * [TCP与UDP](note/browser.md#TCP与UDP)
+  * [HTTP](note/browser.md#HTTP)
+  * [HTTP/2](note/browser.md#HTTP2)
+  * [HTTPS](note/browser.md#HTTPS)
+  * [web安全](note/browser.md#web安全)
+  * [跨域](note/browser.md#跨域)
+
+
+* 进阶
+  * [线程与进程](note/advanced.md#线程与进程)
+  * [requestIdleCallback](note/advanced.md#requestIdleCallback)
+  * [requestAnimationFrame](note/advanced.md#requestAnimationFrame)
+  * [web worker](note/advanced.md#web-worker)
+  * [Event Loop](note/advanced.md#Event-Loop)
+  * [设计模式](note/toutiao.md#设计模式)
+  * [solid原则](note/toutiao.md#solid原则)
+  * [XMLHttpRequest](note/XMLHttpRequest.md)
+
+
+* 代码实现
+  * 实现
+    * [call实现](note/solution/achieve.md#call)
+    * [apply实现](note/solution/achieve.md#apply)
+    * [bind实现](note/solution/achieve.md#bind)
+    * [filter实现](note/solution/achieve.md#filter)
+    * [Promise.all实现](note/solution/achieve.md#PromiseAll)
+    * [Promise.retry实现](note/solution/achieve.md#PromiseRetry)
+  * 数组
+    * [数组去重](note/solution/array.md#数组去重)
+    * [数组乱序](note/solution/array.md#数组乱序)
+    * [数组扁平化](note/solution/array.md#数组扁平化)
+  * 方法
+    * [函数柯里化实现](note/solution.md#函数柯里化实现)
+    * [防抖和节流](note/solution.md#防抖和节流)
+    * [深拷贝](note/problems/README.md#深拷贝)
+    * [依赖注入实现](note/solution.md#依赖注入实现)
+  * 其他
+    * [fetch取消](note/solution.md#fetch取消)
+    * [请求并发](note/solution.md#请求并发)
+
+
+* [基础](note/basis.md)
+* [基础](note/TheDefinitiveGuide.md)
+
+
 * [头条面试题](note/toutiao.md)
-  * [fetch取消](note/toutiao.md#fetch取消)
-  * [Event Loop](note/toutiao.md#Event-Loop)
   * [数字千分位处理](note/toutiao.md#数字千分位处理)
   * [Symbol](note/toutiao.md#Symbol)
   * [隐式转化](note/toutiao.md#隐式转化)
+  * [事件委托](note/toutiao.md#事件委托)
   * [数据类型转换](note/toutiao.md#数据类型转换)
   * [继承](note/toutiao.md#继承)
-  * [Promise.all 实现](note/toutiao.md#Promise.all)
   * [arguments](note/toutiao.md#arguments)
-  * [bind 实现](note/toutiao.md#bind)
-  * [函数柯里化实现](note/toutiao.md#函数柯里化实现)
-
-* CSS
-  * [移动端端一像素边框](note/CSS.md#移动端端一像素边框)
-  * [BFC](note/CSS.md#BFC)
-  * [清除浮动](note/CSS.md#清除浮动)
-  * [圣杯布局](note/CSS.md#圣杯布局)
-  * [双飞翼布局](note/CSS.md#双飞翼布局)
-  * [flex布局](note/CSS.md#flex布局)
-  * [上中下布局](note/CSS.md#上中下布局)
-  * [高为宽的一半居中](note/CSS.md#高为宽的一半居中)
-  * [正方形、三角形、扇形](note/CSS.md#正方形、三角形、扇形)
-  * [单行或多行截断](note/CSS.md#单行或多行截断)
-
-* 计算机
-  * [线程与进程的区别，什么是线程同步](note/problems/README.md#线程与进程的区别)
-
-* 基础
-  * [严格模式](note/basis.md#严格模式)
-  * [数据类型](note/basis.md#数据类型)
-  * [进制](note/basis.md#进制)
-  * [位操作](note/basis.md#位操作)
-  * [精度](note/basis.md#精度)
-  * [函数重载](note/basis.md#函数重载)
-  * [栈内存与堆内存](note/basis.md#栈内存与堆内存)
-  * [变量](note/basis.md#变量)
-  * [作用域](note/basis.md#作用域)
-  * [instanceof 与 typeof](note/basis.md#instanceof与typeof)
 
 * 算法
   * [时间复杂度](note/algorithm.md#时间复杂度)
@@ -62,36 +92,24 @@
   * [背包问题](note/algorithm.md#背包问题)
 
 * 数组
-  * [数组去重](note/problems/README.md#unique)
   * [找出数组中重复出现过的元素](note/problems/README.md#findArrDup)
   * [找出数组中的最大值](note/problems/README.md#max)
-  * [打乱数组的方法](note/problems/README.md#arrayrandom)
-  * [数组扁平化](note/problems/README.md#flatten)
   * [判断一个对象是不是数组类型](note/problems/README.md#checkArray)
+  * [数组内求目标和](note/toutiao.md#数组内求目标和)
+  * [数组求2值和](note/toutiao.md#数组求2值和)
 
 * 考题
-  * [在浏览器中输入url后发生了什么](note/problems/what-really-happens-when-you-navigate-to-a-url.md)
   * [async与defer区别](note/problems/README.md#asyncDefer)
   * [new操作符](note/problems.md#new)
-  * [函数防抖](note/problems/README.md#函数防抖)
-  * [函数节流](note/problems/README.md#函数节流)
   * [序列化和反序列化](note/problems/README.md#序列化)
-  * [深度拷贝/浅度拷贝](note/problems/README.md#clone)
   * [LazyMan](note/problems/README.md#LazyMan)
-  * [用JS代码求出页面上一个元素的最终的background-color，不考虑IE浏览器，不考虑元素float情况](note/problems/README.md#jsComputeBgColor)
 
 * React
   * [源码解析](note/react.md#源码解析)
   * [原理](note/react.md#原理)
+  * [mbox](note/mbox.md)
+  * [redux](note/redux.md)
 
 * 工具
   * [webpack](note/build.md#webpack)
   * [AMD CMD CommonJS ES6](note/build.md#AMD-CMD-CommonJS-ES6)
-
-* 网络和请求
-  * [TCP、UDP](note/HTTP.md#TCP、UDP)
-  * [HTTP](note/HTTP.md#HTTP)
-  * [HTTP/2](note/HTTP.md#HTTP2)
-  * [HTTPS](note/HTTP.md#HTTPS)
-  * [XMLHttpRequest](note/HTTP.md#XMLHttpRequest)
-  * [跨域](note/HTTP.md#跨域)

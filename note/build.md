@@ -2,6 +2,8 @@
 
 从入口文件开始，识别模块依赖，分析、编译并输出代码。
 
+### 优化
+
 * 配置 `include` `exclude` 减少文件搜索范围
 * 配置编译缓存 `babel-loader?cacheDirectory=ture`
 * 使用 `HappyPack` 并行执行 `loader`
