@@ -166,22 +166,22 @@ ID | 0100
 * 根元素（`html`）
 * 浮动元素（`float: left|right`）
 * 绝对定位（`position: absolute|fixed`）
-* 行内快元素（`display: inline-block`）
+* `overflow: hidden|auto|scroll`
+* 行内块元素（`display: inline-block`）
 * 表格单元格（`display: table-cell`）
 * 表格标题（`display: table-caption`）
 * 匿名表格单元格元素（`display: table|table-row|table-row-group|table-header-group|table-footer-group|inline-table`）
-* `overflow: hidden|auto|scroll`
 * `contain: layout|content|paint`
 * 弹性元素（`display: flex|inline-flex`）
 * 网格元素（`display: grid|inline-grid`）
 
 ### BFC布局规则
 
-* 内部的box会在垂直方向，一个接一个的放置；
-* box垂直方向的距离由margin决定。属于同一个BFC的两个相邻box的margin会发生重叠。每个元素的左外边距与包含块的左边界相接触，即使浮动元素也是如此；
+* BFC就是页面上一个隔离的独立容器，容器内外元素不相互影响
+* 内部的box会在垂直方向，一个接一个的放置
+* 同一个BFC的两个相邻元素的margin会发生重叠。每个元素的左外边距与包含块的左边界相接触，即使浮动元素也是如此；
 * BFC的区域不会与float的元素区域重叠
 * 计算BFC的高度时，浮动子元素也参与计算
-* BFC就是页面上一个隔离的独立容器，容器里面的子元素不会影响到外面的元素，反之亦然
 
 ### BFC能解决的问题
 

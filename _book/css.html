@@ -384,10 +384,10 @@
     
         <li class="chapter " data-level="2.1.2" data-path="dom.html">
             
-                <a href="dom.html#事件绑定">
+                <a href="dom.html#href和src">
             
                     
-                    事件绑定
+                    href和src
             
                 </a>
             
@@ -395,7 +395,20 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.3" data-path="note/BOM.html">
+        <li class="chapter " data-level="2.1.3" data-path="dom.html">
+            
+                <a href="dom.html#事件">
+            
+                    
+                    事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="note/BOM.html">
             
                 <a href="note/BOM.html#cookie、session和localStorage">
             
@@ -2049,22 +2062,22 @@
 <li>&#x6839;&#x5143;&#x7D20;&#xFF08;<code>html</code>&#xFF09;</li>
 <li>&#x6D6E;&#x52A8;&#x5143;&#x7D20;&#xFF08;<code>float: left|right</code>&#xFF09;</li>
 <li>&#x7EDD;&#x5BF9;&#x5B9A;&#x4F4D;&#xFF08;<code>position: absolute|fixed</code>&#xFF09;</li>
-<li>&#x884C;&#x5185;&#x5FEB;&#x5143;&#x7D20;&#xFF08;<code>display: inline-block</code>&#xFF09;</li>
+<li><code>overflow: hidden|auto|scroll</code></li>
+<li>&#x884C;&#x5185;&#x5757;&#x5143;&#x7D20;&#xFF08;<code>display: inline-block</code>&#xFF09;</li>
 <li>&#x8868;&#x683C;&#x5355;&#x5143;&#x683C;&#xFF08;<code>display: table-cell</code>&#xFF09;</li>
 <li>&#x8868;&#x683C;&#x6807;&#x9898;&#xFF08;<code>display: table-caption</code>&#xFF09;</li>
 <li>&#x533F;&#x540D;&#x8868;&#x683C;&#x5355;&#x5143;&#x683C;&#x5143;&#x7D20;&#xFF08;<code>display: table|table-row|table-row-group|table-header-group|table-footer-group|inline-table</code>&#xFF09;</li>
-<li><code>overflow: hidden|auto|scroll</code></li>
 <li><code>contain: layout|content|paint</code></li>
 <li>&#x5F39;&#x6027;&#x5143;&#x7D20;&#xFF08;<code>display: flex|inline-flex</code>&#xFF09;</li>
 <li>&#x7F51;&#x683C;&#x5143;&#x7D20;&#xFF08;<code>display: grid|inline-grid</code>&#xFF09;</li>
 </ul>
 <h3 id="bfc&#x5E03;&#x5C40;&#x89C4;&#x5219;">BFC&#x5E03;&#x5C40;&#x89C4;&#x5219;</h3>
 <ul>
-<li>&#x5185;&#x90E8;&#x7684;box&#x4F1A;&#x5728;&#x5782;&#x76F4;&#x65B9;&#x5411;&#xFF0C;&#x4E00;&#x4E2A;&#x63A5;&#x4E00;&#x4E2A;&#x7684;&#x653E;&#x7F6E;&#xFF1B;</li>
-<li>box&#x5782;&#x76F4;&#x65B9;&#x5411;&#x7684;&#x8DDD;&#x79BB;&#x7531;margin&#x51B3;&#x5B9A;&#x3002;&#x5C5E;&#x4E8E;&#x540C;&#x4E00;&#x4E2A;BFC&#x7684;&#x4E24;&#x4E2A;&#x76F8;&#x90BB;box&#x7684;margin&#x4F1A;&#x53D1;&#x751F;&#x91CD;&#x53E0;&#x3002;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x5DE6;&#x5916;&#x8FB9;&#x8DDD;&#x4E0E;&#x5305;&#x542B;&#x5757;&#x7684;&#x5DE6;&#x8FB9;&#x754C;&#x76F8;&#x63A5;&#x89E6;&#xFF0C;&#x5373;&#x4F7F;&#x6D6E;&#x52A8;&#x5143;&#x7D20;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#xFF1B;</li>
+<li>BFC&#x5C31;&#x662F;&#x9875;&#x9762;&#x4E0A;&#x4E00;&#x4E2A;&#x9694;&#x79BB;&#x7684;&#x72EC;&#x7ACB;&#x5BB9;&#x5668;&#xFF0C;&#x5BB9;&#x5668;&#x5185;&#x5916;&#x5143;&#x7D20;&#x4E0D;&#x76F8;&#x4E92;&#x5F71;&#x54CD;</li>
+<li>&#x5185;&#x90E8;&#x7684;box&#x4F1A;&#x5728;&#x5782;&#x76F4;&#x65B9;&#x5411;&#xFF0C;&#x4E00;&#x4E2A;&#x63A5;&#x4E00;&#x4E2A;&#x7684;&#x653E;&#x7F6E;</li>
+<li>&#x540C;&#x4E00;&#x4E2A;BFC&#x7684;&#x4E24;&#x4E2A;&#x76F8;&#x90BB;&#x5143;&#x7D20;&#x7684;margin&#x4F1A;&#x53D1;&#x751F;&#x91CD;&#x53E0;&#x3002;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x5DE6;&#x5916;&#x8FB9;&#x8DDD;&#x4E0E;&#x5305;&#x542B;&#x5757;&#x7684;&#x5DE6;&#x8FB9;&#x754C;&#x76F8;&#x63A5;&#x89E6;&#xFF0C;&#x5373;&#x4F7F;&#x6D6E;&#x52A8;&#x5143;&#x7D20;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#xFF1B;</li>
 <li>BFC&#x7684;&#x533A;&#x57DF;&#x4E0D;&#x4F1A;&#x4E0E;float&#x7684;&#x5143;&#x7D20;&#x533A;&#x57DF;&#x91CD;&#x53E0;</li>
 <li>&#x8BA1;&#x7B97;BFC&#x7684;&#x9AD8;&#x5EA6;&#x65F6;&#xFF0C;&#x6D6E;&#x52A8;&#x5B50;&#x5143;&#x7D20;&#x4E5F;&#x53C2;&#x4E0E;&#x8BA1;&#x7B97;</li>
-<li>BFC&#x5C31;&#x662F;&#x9875;&#x9762;&#x4E0A;&#x4E00;&#x4E2A;&#x9694;&#x79BB;&#x7684;&#x72EC;&#x7ACB;&#x5BB9;&#x5668;&#xFF0C;&#x5BB9;&#x5668;&#x91CC;&#x9762;&#x7684;&#x5B50;&#x5143;&#x7D20;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5230;&#x5916;&#x9762;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x53CD;&#x4E4B;&#x4EA6;&#x7136;</li>
 </ul>
 <h3 id="bfc&#x80FD;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;">BFC&#x80FD;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;</h3>
 <ul>
@@ -2356,7 +2369,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"link与@import","level":"1.2.1","depth":2,"next":{"title":"FOUC","level":"1.2.2","depth":2,"anchor":"#FOUC","path":"css.md","ref":"css.md#FOUC","articles":[]},"previous":{"title":"CSS","level":"1.2","depth":1,"ref":"","articles":[{"title":"link与@import","level":"1.2.1","depth":2,"anchor":"#link-import","path":"css.md","ref":"css.md#link-import","articles":[]},{"title":"FOUC","level":"1.2.2","depth":2,"anchor":"#FOUC","path":"css.md","ref":"css.md#FOUC","articles":[]},{"title":"盒子模型","level":"1.2.3","depth":2,"anchor":"#盒子模型","path":"css.md","ref":"css.md#盒子模型","articles":[]},{"title":"CSS选择器","level":"1.2.4","depth":2,"anchor":"#CSS选择器","path":"css.md","ref":"css.md#CSS选择器","articles":[]},{"title":"inline-block间隙","level":"1.2.5","depth":2,"anchor":"#inline-block间隙","path":"css.md","ref":"css.md#inline-block间隙","articles":[]},{"title":"position属性","level":"1.2.6","depth":2,"anchor":"#position属性","path":"css.md","ref":"css.md#position属性","articles":[]},{"title":"flex布局","level":"1.2.7","depth":2,"anchor":"#flex布局","path":"css.md","ref":"css.md#flex布局","articles":[]},{"title":"em、rem、vw、vh","level":"1.2.8","depth":2,"anchor":"#em、rem、vw、vh","path":"css.md","ref":"css.md#em、rem、vw、vh","articles":[]},{"title":"padding和margin的百分比","level":"1.2.9","depth":2,"anchor":"#padding和margin的百分比","path":"css.md","ref":"css.md#padding和margin的百分比","articles":[]},{"title":"垂直水平居中","level":"1.2.10","depth":2,"anchor":"#垂直水平居中","path":"css.md","ref":"css.md#垂直水平居中","articles":[]},{"title":"BFC","level":"1.2.11","depth":2,"anchor":"#BFC","path":"css.md","ref":"css.md#BFC","articles":[]},{"title":"清除浮动","level":"1.2.12","depth":2,"anchor":"#清除浮动","path":"css.md","ref":"css.md#清除浮动","articles":[]},{"title":"三栏布局（左中右、上中下）","level":"1.2.13","depth":2,"anchor":"#三栏布局（左中右、上中下）","path":"css.md","ref":"css.md#三栏布局（左中右、上中下）","articles":[]},{"title":"三角形","level":"1.2.14","depth":2,"anchor":"#三角形","path":"css.md","ref":"css.md#三角形","articles":[]},{"title":"多行截断","level":"1.2.15","depth":2,"anchor":"#多行截断","path":"css.md","ref":"css.md#多行截断","articles":[]},{"title":"一像素边框","level":"1.2.16","depth":2,"anchor":"#一像素边框","path":"css.md","ref":"css.md#一像素边框","articles":[]},{"title":"动画","level":"1.2.17","depth":2,"anchor":"#动画","path":"css.md","ref":"css.md#动画","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["back-to-top-button","theme-comscore","livereload"],"pluginsConfig":{"livereload":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-comscore":{},"back-to-top-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"css.md","mtime":"2019-12-02T07:08:54.045Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-29T01:11:12.980Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"link与@import","level":"1.2.1","depth":2,"next":{"title":"FOUC","level":"1.2.2","depth":2,"anchor":"#FOUC","path":"css.md","ref":"css.md#FOUC","articles":[]},"previous":{"title":"CSS","level":"1.2","depth":1,"ref":"","articles":[{"title":"link与@import","level":"1.2.1","depth":2,"anchor":"#link-import","path":"css.md","ref":"css.md#link-import","articles":[]},{"title":"FOUC","level":"1.2.2","depth":2,"anchor":"#FOUC","path":"css.md","ref":"css.md#FOUC","articles":[]},{"title":"盒子模型","level":"1.2.3","depth":2,"anchor":"#盒子模型","path":"css.md","ref":"css.md#盒子模型","articles":[]},{"title":"CSS选择器","level":"1.2.4","depth":2,"anchor":"#CSS选择器","path":"css.md","ref":"css.md#CSS选择器","articles":[]},{"title":"inline-block间隙","level":"1.2.5","depth":2,"anchor":"#inline-block间隙","path":"css.md","ref":"css.md#inline-block间隙","articles":[]},{"title":"position属性","level":"1.2.6","depth":2,"anchor":"#position属性","path":"css.md","ref":"css.md#position属性","articles":[]},{"title":"flex布局","level":"1.2.7","depth":2,"anchor":"#flex布局","path":"css.md","ref":"css.md#flex布局","articles":[]},{"title":"em、rem、vw、vh","level":"1.2.8","depth":2,"anchor":"#em、rem、vw、vh","path":"css.md","ref":"css.md#em、rem、vw、vh","articles":[]},{"title":"padding和margin的百分比","level":"1.2.9","depth":2,"anchor":"#padding和margin的百分比","path":"css.md","ref":"css.md#padding和margin的百分比","articles":[]},{"title":"垂直水平居中","level":"1.2.10","depth":2,"anchor":"#垂直水平居中","path":"css.md","ref":"css.md#垂直水平居中","articles":[]},{"title":"BFC","level":"1.2.11","depth":2,"anchor":"#BFC","path":"css.md","ref":"css.md#BFC","articles":[]},{"title":"清除浮动","level":"1.2.12","depth":2,"anchor":"#清除浮动","path":"css.md","ref":"css.md#清除浮动","articles":[]},{"title":"三栏布局（左中右、上中下）","level":"1.2.13","depth":2,"anchor":"#三栏布局（左中右、上中下）","path":"css.md","ref":"css.md#三栏布局（左中右、上中下）","articles":[]},{"title":"三角形","level":"1.2.14","depth":2,"anchor":"#三角形","path":"css.md","ref":"css.md#三角形","articles":[]},{"title":"多行截断","level":"1.2.15","depth":2,"anchor":"#多行截断","path":"css.md","ref":"css.md#多行截断","articles":[]},{"title":"一像素边框","level":"1.2.16","depth":2,"anchor":"#一像素边框","path":"css.md","ref":"css.md#一像素边框","articles":[]},{"title":"动画","level":"1.2.17","depth":2,"anchor":"#动画","path":"css.md","ref":"css.md#动画","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["back-to-top-button","theme-comscore","livereload"],"pluginsConfig":{"livereload":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"theme-comscore":{},"back-to-top-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"css.md","mtime":"2019-12-02T08:03:50.473Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-29T01:11:12.980Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

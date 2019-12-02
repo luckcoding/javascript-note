@@ -21,7 +21,8 @@
 
 * DOM/BOM
   * [语义化](dom.md#语义化)
-  * [事件绑定](dom.md#事件绑定)
+  * [href和src](dom.md#href和src)
+  * [事件](dom.md#事件)
   * [cookie、session和localStorage](note/BOM.md#cookie、session和localStorage)
 
 
