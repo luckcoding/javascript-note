@@ -3,12 +3,16 @@
 ## call实现
 
 ```js
-Function.prototype.call = function(context = {}) {
+Function.prototype.call = function(context) {
     if (typeof this !== 'function') {
         throw new TypeError('not a func')
     }
+    context = context || {}
     context.fn = this
-    var args = [].slice.call(arguments, 1)
+    var args = []
+    for (var i = 1; i < arguments.length; i++) {
+        args.push(arguments[i])
+    }
     var result = eval('context.fn(' + args +')')
     delete context.fn
     return result
@@ -52,13 +56,15 @@ Function.prototype.bind = function (context) {
     var self = this
     // 拿到除了上下文参数的其他所有参数
     var args = Array.prototype.slice.call(arguments, 1)
-    var F = function() {}
+    // 原型处理
+    function F() {}
     F.prototype = this.prototype
-    var bound = function() {
+    function bound() {
         var bindArgs = [].slice.call(arguments)
-        return self.apply(this instanceof F ? this : context, args.concat(bindArgs))
+        context = this instanceof F ? this : context
+        return self.apply(context, args.concat(bindArgs))
     }
-    bound.prototype = new F()
+    bound.prototype = new F() // 继承原型
     return bound
 }
 ```
@@ -71,11 +77,8 @@ Function.prototype.bind = function (context) {
 
 ```js
 Array.prototype.filter = function (fn, context) {
-    if (!Array.isArray(this)) {
-        throw new TypeError('not array')
-    }
     if (typeof fn !== 'function') {
-        throw new TypeError(fn + ' not array')
+        throw new TypeError(fn + ' is not function')
     }
     let result = []
     for (var i = 0; i < this.length; i++) {
@@ -96,24 +99,90 @@ Array.prototype.filter = function (fn, context) {
 
 ```js
 Promise.all = function (promises) {
-     if (!Array.isArray(promises)) {
-          throw new TypeError('type error')
-     }
+    if (!Array.isArray(promises)) {
+        throw new TypeError('type error')
+    }
 
-     return new Promise(function (resolve, reject) {
-          var result = [], len = promises.length;
-          for (var i = 0; i < len; i++) {
-               promises[i].then(function (data) {
-                    result.push(data)
-                    if(result.length === len){
-                         resolve(result)
-                    }
-               }).catch(reject)
-          }
-     })
+    return new Promise(function (resolve, reject) {
+        var result = [], len = promises.length, count = 0;
+        for (let i = 0; i < len; i++) {
+            promises[i].then(function (data) {
+                count++
+                result[i] = data
+                if (count === len) {
+                    resolve(result)
+                }
+            }).catch(reject)
+        }
+    })
 }
 ```
 
 ---
 
-<a id="PromiseAll"></a>
+<a id="PromiseRetry"></a>
+
+## Promise.retry实现
+
+如果不成功，多尝试 times 次
+
+```js
+Promise.retry = function (fn, times, delay) {
+    return new Promise((resolve, reject) => {
+        let error
+        let attempt = () => {
+            if (times === 0) {
+                reject(error)
+            } else {
+                fn().then(resolve).catch(e => {
+                    times--
+                    error = e
+                    setTimeout(attempt, delay)
+                })
+            }
+        }
+        attempt()
+    })
+}
+```
+
+---
+
+<a id="instanceof"></a>
+
+## instanceof实现
+
+```js
+function _instanceof (left, right) {
+    var proto = left.__proto__
+    var prototype = right.prototype
+    while(true) {
+        if(proto === null) {
+            return false
+        }
+        if(proto == prototype) {
+            return true
+        }
+        proto = proto.__proto__
+    }
+}
+```
+
+---
+
+<a id="new"></a>
+
+## new实现
+
+```js
+function _new (Fn) {
+    // 1.创建一个空对象
+    var obj = {}
+    // 2.链接到该函数的原型
+    obj.__proto__ = Fn.prototype
+    // 3.绑定this
+    var result = Fn.call(obj)
+    // 4.返回新对象
+    return typeof result === 'object' ? result : obj
+}
+```

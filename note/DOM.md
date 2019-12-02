@@ -4,21 +4,7 @@
 
 ### childNodes
 
-每个节点都有一个`childNodes`属性，其中保存着一个`NodeList`对象。`NodeList`类似数组，但不是数组。其数组化如下例子：
-
-```
-function nodeList2Array (nodes) {
-  var array = null
-  try {
-    array = Array.prototype.slice.call(nodes, 0); // 非IE浏览器
-  } catch (e) {
-    array = new Array()
-    for (var i = 0, len = nodes.length; i < len; i++) {
-      array.push(nodes[i])
-    }
-  }
-}
-```
+每个节点都有一个`childNodes`属性，其中保存着一个`NodeList`对象。`NodeList`是类数组。
 
 #### 节点的`子节点、末尾节点`
 

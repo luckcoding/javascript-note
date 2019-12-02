@@ -60,3 +60,21 @@ function flatten(arr = []) {
     return result
 }
 ```
+
+---
+
+## 数组最大值
+
+```js
+// 第一种 reduce
+function max(arr) {
+  return arr.reduce(function (prev, next) {
+    return Math.max(prev, next)
+  })
+}
+
+// es6
+function max(arr) {
+  return Math.max(...arr)
+}
+```

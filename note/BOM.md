@@ -6,7 +6,7 @@
 
 ### 获取页面视口大小
 
-```
+```js
 var pageWidth = window.innerWidth,
     pageHeight = window.innerHeight;
 if (typeof pageWidth !== 'number') {
@@ -60,8 +60,30 @@ search | "?query=js | 返回查询字符串，以"?"开头
 ------ | ------
 history.go(-1) | 后退一页
 history.go(2) | 前进2页
-~~history.go('baidu.com')~~ | 跳转到最近的'baidu.com'
 history.back() | 后退一页
 history.forward() | 前进一页
 
 `history.length`,保存着历史记录的数量。
+
+---
+
+<a id="cookie、session和localStorage"></a>
+
+## cookie、session和localStorage
+
+### cookie
+
+浏览器根据`domain`来发送响应的`cookie`，可通过设置`expires`、`max-age`来设定过期时间。有个数限制和大小限制（一般4k）。浏览器每次请求都会携带`cookie`，设置`HttpOnly`可让前端无法读取此条`cookie`
+
+```js
+// 每次只能设置一条，后设置的path与name会覆盖之前与此一样的cookie
+document.cookie = 'namv=value;expires=时间/max-age=秒'
+```
+
+### sessionStorage
+
+仅在当前会话下有效，关闭页面或浏览器后会被清除。大小限制一般为5M，仅保存在客户端中，不参与服务端通讯。且与`localStorage`有相同的方法。
+
+### localStorage
+
+除非主动清除，否则存储是永久的。大小限制一般为5M，仅保存在客户端中，不参与服务端通讯。

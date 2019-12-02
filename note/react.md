@@ -25,7 +25,7 @@ const ReactElement = function (type, key, ref, self, source, owner, props) {
 * `React.createElement`、`React.cloneElement`2个方法基于`ReactElement`
 * `Component`创建组建
 
-```
+```js
 function Component(props, context, updater) {
 	this.props = props
 	this.context = context
@@ -34,11 +34,24 @@ function Component(props, context, updater) {
 }
 
 Component.prototype.setState = function(partialState, callback) {
-	this.updater.enqueueSetState(this, partialState, callback, 'setState') // setState 是放在队列里去执行，所以一个代码块内连续调用setState，渲染只会产生一次
+	this.updater.enqueueSetState(this, partialState, callback, 'setState')
+	// 创建此组件实例的renderer（可能是react-dom/react-native等等）来执行任务队列
 }
 
 Component.prototype.forceUpdate = function(callback) {
 	this.updater.enqueueSetState(this, callback, 'forceUpdate')
+}
+```
+
+* react package内并不包含实现内容，其实现内容位于react-dom、react-native等等的renderer中。
+
+```js
+export function createContext(...) {
+	...
+	const context = {
+		$$typeof: REACT_CONTEXT_TYPE, // 使用Symbol对象
+		...
+	}
 }
 ```
 
@@ -81,9 +94,54 @@ Component.prototype.forceUpdate = function(callback) {
 
 ## Fiber
 
-异步渲染UI。组件渲染和更新时，React分为**调和阶段**和**渲染阶段**，调和阶段是采用递归遍历方式，无法中断。Fiber重新实现堆栈帧，将可中断的任务拆分成多个子任务。在`render`和`setState`的时候开始创建，在`requestIdleCallback`空闲时执行，从根节点遍历Fiber节点并构建任务树，然后生成`EffectList`进行更新DOM。
+> 参考: [图解Fiber架构](https://zhuanlan.zhihu.com/p/92832843)
+
+除了React元素树（虚拟DOM）之外，有一个用于保存状态的内部实例树（Host Instance）。该内部实例树的新实现以及操作树的算法被成为Fiber。Fiber也是一个任务调和器：
+
+* 可分片（拆分任务）
+* 可中断（执行一个任务后可回头继续执行未完成的任务）
+* 具备优先级（任务优先级高的先执行）
+
+```js
+function FiberNode(tag, pendingProps, key, mode) {
+	this.tag = tag
+	this.key = key
+	...
+
+	// Fiber
+	this.return = null
+	this.child = null
+	this.sibling = null
+	this.index = 0
+	...
+	// effects
+	this.effectTag = NoEffect
+	this.nextEffect = null
+	...
+}
+```
+
+### Fiber Tree的构建
+
+通过child找子节点、sibling找兄弟节点、return找父节点的循环方法构建Fiber tree。
+
+```js
+function List () {
+	return [1,2,3].map((i) => <span key={i}>{i}</span>)
+}
+function App () {
+	return [
+		<button>btn</button>,
+		<List />,
+		<div></div>
+	]
+}
+ReactDom.render(<App />, document.getElementById('root'))
+```
 
 ## Hook
+
+hooks的数据作为Fiber组件上的节点
 
 ## getDerivedStateFromPros
 
