@@ -87,10 +87,34 @@ export function createContext(...) {
 
 ## 生命周期
 
-1. 初始化阶段: `constructor` `static getDerivedStateFromProps()` `UNSAFE_componentWillMount()` `render()` `componentDidMount()`
-2. 更新阶段（state,props改变）: `UNSAFE_componentWillReceiveProps()` `static getDerivedStateFromProps()` `shouldComponentUpdate()` `UNSAFE_componentWillUpdate()` `render()` `getSnapshotBreforeUpdate()` `componentDidUpdate()`
+1. 初始化阶段
+	1. `constructor`
+	2. `static getDerivedStateFromProps()`
+	3. `UNSAFE_componentWillMount()`
+	4. `render()`
+	5. `componentDidMount()`
+2. 更新阶段
+	1. `UNSAFE_componentWillReceiveProps()`（onyl props改变）
+	2. `static getDerivedStateFromProps()`（onyl props改变）
+	3. `shouldComponentUpdate()`
+	4. `UNSAFE_componentWillUpdate()`
+	5. `render()`
+	6. `getSnapshotBreforeUpdate()`
+	7. `componentDidUpdate()`
 3. 卸载阶段: `componentWillUnmount()`
 4. 错误处理: `componentDidCatch()`
+
+### getDerivedStateFromPros(nextProps, prevState)
+
+返回`null`表示不做任何改变
+
+### shouldComponentUpdate(nextProps, nextState)
+
+返回false控制组件不更新
+
+### getSnapshotBreforeUpdate(prevProps, prevState)
+
+其返回值会传入`componentDidUpdate(prevProps, prevState, fromSnapData)`
 
 ## Fiber
 
@@ -141,13 +165,9 @@ ReactDom.render(<App />, document.getElementById('root'))
 
 ## Hook
 
-hooks的数据作为Fiber组件上的节点
-
-## getDerivedStateFromPros
+hooks的数据作为Fiber组件上的节点。
 
 ## 事件合成
 
 * 事件委托：把所有事件绑定到最外层，使用一个统一的事件监听器
 * 自动绑定：每个事件的上下文均指向所属组件
-
-## setState 机制

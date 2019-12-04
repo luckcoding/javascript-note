@@ -1,4 +1,8 @@
-## redux源码实现
+<a id="redux"></a>
+
+## redux
+
+### 源码实现
 
 ```js
 function createStore (reducer) {
@@ -30,7 +34,7 @@ function combineReducers (reducers) {
 }
 ```
 
-## redux异步中间件原理
+### 异步中间件原理
 
 ```js
 // redux 中间件

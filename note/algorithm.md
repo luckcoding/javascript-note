@@ -19,7 +19,7 @@
 
 ## 冒泡排序
 
-> 每次比较2个元素，如果顺序错误就交换位置。O(n<sup>2</sup>)，不稳定
+> 每次比较相邻2个元素，如果顺序错误就交换位置。O(n<sup>2</sup>)，不稳定
 
 ```js
 function bubbleSort(arr) {
@@ -49,7 +49,7 @@ function bubbleSort(arr) {
 
 ## 选择排序
 
-> O(n<sup>2</sup>)，稳定
+> 首先找到未排序最小元素放到首位，再寻找剩余的最小往后排。O(n<sup>2</sup>)，稳定
 
 ```js
 function selectionSort (arr) {
@@ -75,6 +75,8 @@ function selectionSort (arr) {
 
 ## 快速排序
 
+> 取中间参照元素，小的放左数组，大的放右数组，再使用该方法继续排序。O(nlog<sub>n</sub>)，不稳定
+
 ```js
 function quickSort(arr) {
   if (arr.length <= 1) {
@@ -83,8 +85,8 @@ function quickSort(arr) {
   
   // 计算参照位
   var cIndex = Math.floor(arr.length / 2)
-
   var c = arr.splice(cIndex, 1)
+
   // 注意 Number([1]) === 1
   var l = []
   var r = []
@@ -418,6 +420,10 @@ function loop(source) {
 3-2-2
 ```
 
+---
+
+<a id="动态规划"></a>
+
 ## 动态规划
 
 把原问题分解成子问题进行求解。
@@ -447,6 +453,8 @@ function makeCoin (coins, aim) {
 }
 ```
 
+---
+
 <a id="最大子序列之和"></a>
 
 ## 最大子序列之和
@@ -464,6 +472,8 @@ function getMaxSeq (arr = []) {
 	return max
 }
 ```
+
+---
 
 <a id="最长公共子串"></a>
 
@@ -488,6 +498,8 @@ function getMaxStr(str1, str2){
   return ''
 }
 ```
+
+---
 
 <a id="最长公共子序列"></a>
 
@@ -538,6 +550,8 @@ function getStr (dp, str1, str2, i, j) {
   }
 }
 ```
+
+---
 
 <a id="背包问题"></a>
 

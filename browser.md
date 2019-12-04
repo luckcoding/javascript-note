@@ -4,16 +4,6 @@
 
 ---
 
-## `HTML5`的离线储存
-
----
-
-<a id="cookie、sessionStorage、localStorage"></a>
-
-## cookie、sessionStorage、localStorage
-
-
-
 <a id="从输入URL到呈现页面过程"></a>
 
 ## 从输入URL到呈现页面过程
@@ -159,7 +149,24 @@ UDP（用户数据报协议）无连接、不可靠，提供面向事务的简�
   * 头部：`<headers>`
   * 主体：`<entity-body>`
 
-### 常见的 HTTP 方法
+### 常见的HTTP请求头
+
+协议头 | 说明 | 示例
+-----|-----|-----
+Accept | 可接受的响应内容类型 | Accept:text/plain
+Authorization | 认证信息 | Authorization: Baber xxx
+Cache-Control | 缓存机制 | Cache-Control: no-cache
+Connection | 连接类型 | Connection: keep-alive
+Cookie | | 
+Content-Type | 请求体类型 | Context-Type: application/x-www-form-unlencoded
+Host | 服务器域名及端口 | Host: www.baidu.com
+If-Match | 缓存资源标记 | 
+If-Modified-Since | 缓存资源过期时间 | 
+Origin | 允许来源 | Origin: http://www.baidu.com
+Referer | 浏览器访问的前一个页面 | Referer: http://baidu.com/prev
+User-Agent | 浏览器标识 | 
+
+### 常见的HTTP方法
 
 * `GET` 请求已被URI（统一资源标识符）识别的资源，可通过URL传参
 * `POST` 传输信息给服务器

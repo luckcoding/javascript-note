@@ -62,13 +62,14 @@ function curry (fn, ...args) {
 
 ```js
 function debounce (func, time) {
-    let timer = null
+    var timer = null
+    var self = this
     return function () {
         if (timeout) {
             clearTimeout(timeout)
         }
         timeout = setTimeout(() => {
-            func.apply(this, arguments)
+            func.apply(self, arguments)
         }, time)
     }
 }
@@ -80,14 +81,15 @@ function debounce (func, time) {
 
 ```js
 function throttle (func, time) {
-    let canRun = true
+    var canRun = true
+    var self = this
     return function () {
         if (!canRun) {
             return
         }
         canRun = false
         setTimeout(() => {
-            func.apply(this, arguments)
+            func.apply(self, arguments)
             canRun = true
         }, time)
     }
@@ -159,7 +161,7 @@ class Parent {
 }
 class Child extends Parent {
     constructor(name, age, sex) {
-        super(name, age)
+        super(name, age) // 子类实例的构建，基于父类实例，所以必须调用super
         this.sex = sex
     }
 }

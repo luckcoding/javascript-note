@@ -93,6 +93,16 @@ Array.prototype.filter = function (fn, context) {
 
 ---
 
+<a id="Promise"></a>
+
+## Promise实现
+
+```js
+
+```
+
+---
+
 <a id="PromiseAll"></a>
 
 ## Promise.all实现
@@ -106,7 +116,7 @@ Promise.all = function (promises) {
     return new Promise(function (resolve, reject) {
         var result = [], len = promises.length, count = 0;
         for (let i = 0; i < len; i++) {
-            promises[i].then(function (data) {
+            promises[i]().then(function (data) {
                 count++
                 result[i] = data
                 if (count === len) {

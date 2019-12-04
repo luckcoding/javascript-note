@@ -1,9 +1,11 @@
 # Summary
 * CSS
   * [link与@import](css.md#link-import)
+  * [重绘与回流](css.md#重绘与回流)
   * [FOUC](css.md#FOUC)
   * [盒子模型](css.md#盒子模型)
   * [CSS选择器](css.md#CSS选择器)
+  * [伪类与伪元素](css.md#伪类与伪元素)
   * [inline-block间隙](css.md#inline-block间隙)
   * [position属性](css.md#position属性)
   * [flex布局](css.md#flex布局)
@@ -20,10 +22,14 @@
 
 
 * DOM/BOM
-  * [语义化](dom.md#语义化)
-  * [href和src](dom.md#href和src)
-  * [事件](dom.md#事件)
-  * [cookie、session和localStorage](note/BOM.md#cookie、session和localStorage)
+  * [语义化](dom-bom.md#语义化)
+  * [viewport](dom-bom.md#viewport)
+  * [href和src](dom-bom.md#href和src)
+  * [事件](dom-bom.md#事件)
+  * [window](dom-bom.md#window)
+  * [location](dom-bom.md#location)
+  * [history](dom-bom.md#history)
+  * [存储](dom-bom/BOM.md#存储)
 
 
 * 浏览器与网络
@@ -59,8 +65,6 @@
   * [rAF与rIC](note/advanced.md#rAF与rIC)
   * [web worker](note/advanced.md#web-worker)
   * [Event Loop](note/advanced.md#Event-Loop)
-  * [设计模式](note/advanced.md#设计模式)
-  * [solid原则](note/advanced.md#solid原则)
   * [XMLHttpRequest](note/XMLHttpRequest.md)
 
 
@@ -78,6 +82,7 @@
     * [数组去重](note/solution/array.md#数组去重)
     * [数组乱序](note/solution/array.md#数组乱序)
     * [数组扁平化](note/solution/array.md#数组扁平化)
+    * [数组最大值](note/solution/array.md#数组最大值)
   * 方法
     * [依赖注入](note/solution/way.md#依赖注入)
     * [柯里化](note/solution/way.md#柯里化)
@@ -104,7 +109,6 @@
   * [深度优先遍历](note/algorithm.md#深度优先遍历)
   * [递归遍历](note/algorithm.md#递归遍历)
   * [动态规划](note/algorithm.md#动态规划)
-  * [贪心算法](note/algorithm.md#贪心算法)
   * [最大子序列之和](note/algorithm.md#最大子序列之和)
   * [最长公共子串](note/algorithm.md#最长公共子串)
   * [最长公共子序列](note/algorithm.md#最长公共子序列)
@@ -126,13 +130,14 @@
   * [源码解析](note/react.md#源码解析)
   * [原理](note/react.md#原理)
   * [hook](note/react.md#hook)
-  * [mbox](note/mbox.md)
-  * [redux](note/redux.md)
+  * [redux](note/redux-mobx.md#redux)
+  * [redux与mobx区别](note/redux-mobx.md#redux与mobx区别)
 
 
 * 工具
-  * [webpack](note/build.md#webpack)
   * [模块化](note/build.md#模块化)
+  * [webpack](note/build.md#webpack)
+  * [babel](note/build.md#babel)
 
 
 * 项目与工程

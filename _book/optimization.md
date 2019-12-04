@@ -24,29 +24,6 @@ FALLBACK:
 / /offline.html
 ```
 
-### 11、浏览器是怎么对`HTML5`的离线储存资源进行管理和加载的呢
-
-*   在线的情况下，浏览器发现`html`头部有`manifest`属性，它会请求`manifest`文件，如果是第一次访问`app`，那么浏览器就会根据manifest文件的内容下载相应的资源并且进行离线存储。如果已经访问过`app`并且资源已经离线存储了，那么浏览器就会使用离线的资源加载页面，然后浏览器会对比新的`manifest`文件与旧的`manifes`t文件，如果文件没有发生改变，就不做任何操作，如果文件改变了，那么就会重新下载文件中的资源并进行离线存储。
-
-*   离线的情况下，浏览器就直接使用离线存储的资源。
-
-### 12、请描述一下 `cookies`，`sessionStorage` 和 `localStorage` 的区别？
-
-*   `cookie`是网站为了标示用户身份而储存在用户本地终端（Client Side）上的数据（通常经过加密）
-
-*   cookie数据始终在同源的http请求中携带（即使不需要），记会在浏览器和服务器间来回传递
-
-*   `sessionStorage`和`localStorage`不会自动把数据发给服务器，仅在本地保存
-
-*   存储大小：
-
-    *   `cookie`数据大小不能超过4k
-    *   `sessionStorage`和`localStorage`虽然也有存储大小的限制，但比`cookie`大得多，可以达到5M或更大
-*   有期时间：
-
-    *   `localStorage` 存储持久数据，浏览器关闭后数据不丢失除非主动删除数据
-    *   `sessionStorage` 数据在当前浏览器窗口关闭后自动删除
-    *   `cookie` 设置的`cookie`过期时间之前一直有效，即使窗口或浏览器关闭
 
 ### 13、iframe的缺点
 * 阻塞主页面的`Onload`事件
@@ -68,34 +45,6 @@ FALLBACK:
 
 *   `svg`绘制出来的每一个图形的元素都是独立的`DOM`节点，能够方便的绑定事件或用来修改。`canvas`输出的是一整幅画布
 *   `svg`输出的图形是矢量图形，后期可以修改参数来自由放大缩小，不会是真和锯齿。而`canvas`输出标量画布，就像一张图片一样，放大会失真或者锯齿
-
-
-### 23、viewport
-
-```source-js
- <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    // width    设置viewport宽度，为一个正整数，或字符串‘device-width’
-    // device-width  设备宽度
-    // height   设置viewport高度，一般设置了宽度，会自动解析出高度，可以不用设置
-    // initial-scale    默认缩放比例（初始缩放比例），为一个数字，可以带小数
-    // minimum-scale    允许用户最小缩放比例，为一个数字，可以带小数
-    // maximum-scale    允许用户最大缩放比例，为一个数字，可以带小数
-    // user-scalable    是否允许手动缩放
-```
-
-*   延伸提问
-    *   怎样处理 移动端 `1px` 被 渲染成 `2px`问题
-
-**局部处理**
-
-*   `mate`标签中的 `viewport`属性 ，`initial-scale` 设置为 `1`
-*   `rem`按照设计稿标准走，外加利用`transfrome` 的`scale(0.5)` 缩小一倍即可；
-
-**全局处理**
-
-*   `mate`标签中的 `viewport`属性 ，`initial-scale` 设置为 `0.5`
-*   `rem` 按照设计稿标准走即可
-
 
 ## CSS部分
 
@@ -146,11 +95,6 @@ FALLBACK:
     *   `PNG8`类似`GIF`颜色上限为`256`，文件小，支持`alpha`透明度，无动画
     *   适合图标、背景、按钮
 
-
-### 20、::before 和 :after中双冒号和单冒号 有什么区别？解释一下这2个伪元素的作用
-
-*   单冒号(`:`)用于CSS3伪类，双冒号(`::`)用于`CSS3`伪元素
-*   用于区分伪类和伪元素
 
 ### 21、如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）
 
@@ -268,59 +212,6 @@ FALLBACK:
 *   如果有`new`关键字，`this`指向`new`出来的那个对象
 *   在事件中，`this`指向触发这个事件的对象，特殊的是，`IE`中的`attachEvent`中的`this`总是指向全局对象`Window`
 
-### 7、事件模型
-
-> `W3C`中定义事件的发生经历三个阶段：捕获阶段（`capturing`）、目标阶段（`targetin`）、冒泡阶段（`bubbling`）
-
-*   冒泡型事件：当你使用事件冒泡时，子级元素先触发，父级元素后触发
-*   捕获型事件：当你使用事件捕获时，父级元素先触发，子级元素后触发
-*   `DOM`事件流：同时支持两种事件模型：捕获型事件和冒泡型事件
-*   阻止冒泡：在`W3c`中，使用`stopPropagation（）`方法；在IE下设置`cancelBubble = true`
-*   阻止捕获：阻止事件的默认行为，例如`click - <a>`后的跳转。在`W3c`中，使用`preventDefault（）`方法，在`IE`下设置`window.event.returnValue = false`
-
-### 8、new操作符具体干了什么呢?
-
-*   创建一个空对象，并且 `this` 变量引用该对象，同时还继承了该函数的原型
-*   属性和方法被加入到 `this` 引用的对象中
-*   新创建的对象由 `this` 所引用，并且最后隐式的返回 `this`
-
-### 9、Ajax原理
-
-*   `Ajax`的原理简单来说是在用户和服务器之间加了—个中间层(`AJAX`引擎)，通过`XmlHttpRequest`对象来向服务器发异步请求，从服务器获得数据，然后用`javascrip`t来操作`DOM`而更新页面。使用户操作与服务器响应异步化。这其中最关键的一步就是从服务器获得请求数据
-*   `Ajax`的过程只涉及`JavaScript`、`XMLHttpRequest`和`DOM`。`XMLHttpRequest`是`aja`x的核心机制
-
-```source-js
- // 1\. 创建连接
-    var xhr = null;
-    xhr = new XMLHttpRequest()
-    // 2\. 连接服务器
-    xhr.open('get', url, true)
-    // 3\. 发送请求
-    xhr.send(null);
-    // 4\. 接受请求
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState == 4){
-            if(xhr.status == 200){
-                success(xhr.responseText);
-            } else { // fail
-                fail && fail(xhr.status);
-            }
-        }
-    }
-```
-
-**ajax 有那些优缺点?**
-
-*   优点：
-    *   通过异步模式，提升了用户体验.
-    *   优化了浏览器和服务器之间的传输，减少不必要的数据往返，减少了带宽占用.
-    *   `Ajax`在客户端运行，承担了一部分本来由服务器承担的工作，减少了大用户量下的服务器负载。
-    *   `Ajax`可以实现动态不刷新（局部刷新）
-*   缺点：
-    *   安全问题 `AJAX`暴露了与服务器交互的细节。
-    *   对搜索引擎的支持比较弱。
-    *   不容易调试。
-
 
 ### 11、模块化开发怎么做？
 
@@ -342,47 +233,6 @@ var module1 = (function(){
 　　})();
 ```
 
-### 15、谈谈你对webpack的看法
-
-*   `WebPack` 是一个模块打包工具，你可以使用`WebPack`管理你的模块依赖，并编绎输出模块们所需的静态文件。它能够很好地管理、打包`Web`开发中所用到的`HTML`、`Javascript`、`CSS`以及各种静态文件（图片、字体等），让开发过程更加高效。对于不同类型的资源，`webpack`有对应的模块加载器。`webpack`模块打包器会分析模块间的依赖关系，最后 生成了优化且合并后的静态资源
-
-### 16、说说你对AMD和Commonjs的理解
-
-*   `CommonJS`是服务器端模块的规范，`Node.js`采用了这个规范。`CommonJS`规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。`AMD`规范则是非同步加载模块，允许指定回调函数
-*   `AMD`推荐的风格通过返回一个对象做为模块对象，`CommonJS`的风格通过对`module.exports`或`exports`的属性赋值来达到暴露模块对象的目的
-
-### 17、常见web安全及防护原理
-
-*   `sql`注入原理
-
-    *   就是通过把`SQL`命令插入到`Web`表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令
-*   总的来说有以下几点
-
-    *   永远不要信任用户的输入，要对用户的输入进行校验，可以通过正则表达式，或限制长度，对单引号和双`"-"`进行转换等
-    *   永远不要使用动态拼装SQL，可以使用参数化的`SQL`或者直接使用存储过程进行数据查询存取
-    *   永远不要使用管理员权限的数据库连接，为每个应用使用单独的权限有限的数据库连接
-    *   不要把机密信息明文存放，请加密或者`hash`掉密码和敏感的信息
-
-**XSS原理及防范**
-
-*   `Xss(cross-site scripting)`攻击指的是攻击者往`Web`页面里插入恶意`html`标签或者`javascript`代码。比如：攻击者在论坛中放一个看似安全的链接，骗取用户点击后，窃取`cookie`中的用户私密信息；或者攻击者在论坛中加一个恶意表单，当用户提交表单的时候，却把信息传送到攻击者的服务器中，而不是用户原本以为的信任站点
-
-**XSS防范方法**
-
-*   首先代码里对用户输入的地方和变量都需要仔细检查长度和对`”<”,”>”,”;”,”’”`等字符做过滤；其次任何内容写到页面之前都必须加以encode，避免不小心把`html tag` 弄出来。这一个层面做好，至少可以堵住超过一半的XSS 攻击
-
-**XSS与CSRF有什么区别吗？**
-
-*   `XSS`是获取信息，不需要提前知道其他用户页面的代码和数据包。`CSRF`是代替用户完成指定的动作，需要知道其他用户页面的代码和数据包。要完成一次`CSRF`攻击，受害者必须依次完成两个步骤
-
-*   登录受信任网站`A`，并在本地生成`Cookie`
-
-*   在不登出`A`的情况下，访问危险网站`B`
-
-**CSRF的防御**
-
-*   服务端的`CSRF`方式方法很多样，但总的思想都是一致的，就是在客户端页面增加伪随机数
-*   通过验证码的方法
 
 ### 18、用过哪些设计模式？
 
@@ -412,75 +262,6 @@ var module1 = (function(){
 *   构造函数： `var obj = new Object();`
 *   Object.create(): `var obj = Object.create(Object.prototype);`
 
-### 22、常见兼容性问题？
-
-*   `png24`位的图片在iE6浏览器上出现背景，解决方案是做成`PNG8`
-*   浏览器默认的`margin`和`padding`不同。解决方案是加一个全局的`*{margin:0;padding:0;}`来统一,，但是全局效率很低，一般是如下这样解决：
-
-```source-css
-body,ul,li,ol,dl,dt,dd,form,input,h1,h2,h3,h4,h5,h6,p{
-margin:0;
-padding:0;
-}
-```
-
-*   `IE`下,`event`对象有`x`,`y`属性,但是没有`pageX`,`pageY`属性
-*   `Firefox`下,`event`对象有`pageX`,`pageY`属性,但是没有`x,y`属性.
-
-### 22、说说你对promise的了解
-
-*   依照 `Promise/A+` 的定义，`Promise` 有四种状态：
-
-    *   `pending:` 初始状态, 非 `fulfilled` 或 `rejected.`
-
-    *   `fulfilled:` 成功的操作.
-
-    *   `rejected:` 失败的操作.
-
-    *   `settled: Promise`已被`fulfilled`或`rejected`，且不是`pending`
-
-*   另外， `fulfilled`与 `rejected`一起合称 `settled`
-
-*   `Promise` 对象用来进行延迟(`deferred`) 和异步(`asynchronous`) 计算
-
-**Promise 的构造函数**
-
-*   构造一个 `Promise`，最基本的用法如下：
-
-```source-js
-var promise = new Promise(function(resolve, reject) {
-
-        if (...) {  // succeed
-
-            resolve(result);
-
-        } else {   // fails
-
-            reject(Error(errMessage));
-
-        }
-    });
-```
-
-*   `Promise` 实例拥有 `then` 方法（具有 `then` 方法的对象，通常被称为`thenable`）。它的使用方法如下：
-
-```
-promise.then(onFulfilled, onRejected)
-
-```
-
-*   接收两个函数作为参数，一个在 `fulfilled` 的时候被调用，一个在`rejected`的时候被调用，接收参数就是 `future`，`onFulfilled` 对应`resolve`, `onRejected`对应 `reject`
-
-### 24、vue、react、angular
-
-*   `Vue.js`
-    一个用于创建 `web` 交互界面的库，是一个精简的 `MVVM`。它通过双向数据绑定把 `View` 层和 `Model` 层连接了起来。实际的 `DOM` 封装和输出格式都被抽象为了`Directives` 和 `Filters`
-
-*   `AngularJS`
-    是一个比较完善的前端`MVVM`框架，包含模板，数据双向绑定，路由，模块化，服务，依赖注入等所有功能，模板功能强大丰富，自带了丰富的 `Angular`指令
-
-*   `react`
-    `React` 仅仅是 `VIEW` 层是`facebook`公司。推出的一个用于构建`UI`的一个库，能够实现服务器端的渲染。用了`virtual dom`，所以性能很好。
 
 ### 25、Node的应用场景
 
@@ -492,18 +273,12 @@ promise.then(onFulfilled, onRejected)
     *   4、非阻塞`I/O`
     *   5、单进程，单线程
 *   优点：
-
     *   高并发（最重要的优点）
 *   缺点：
 
     *   1、只支持单`核CPU`，不能充分利用`CPU`
     *   2、可靠性低，一旦代码某个环节崩溃，整个系统都崩溃
 
-### 26、谈谈你对AMD、CMD的理解
-
-*   `CommonJS`是服务器端模块的规范，`Node.js`采用了这个规范。`CommonJS`规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。`AMD`规范则是非同步加载模块，允许指定回调函数
-
-*   `AMD`推荐的风格通过返回一个对象做为模块对象，`CommonJS`的风格通过对`module.exports`或`exports`的属性赋值来达到暴露模块对象的目的
 
 ### 27、那些操作会造成内存泄漏？
 
@@ -519,9 +294,6 @@ promise.then(onFulfilled, onRejected)
 *   隐藏`input`
 *   `ip`地址
 
-### 29、介绍js的基本数据类型
-
-*   `Undefined`、`Null`、`Boolean`、`Number`、`String`
 
 ### 30、介绍js有哪些内置对象？
 
@@ -581,9 +353,6 @@ var last=JSON.stringify(obj);
 
 ```
 
-### 39、js延迟加载的方式有哪些？
-
-*   `defer`和`async`、动态创建`DOM`方式（用得最多）、按需异步载入`js`
 
 ### 40、同步和异步的区别?
 
@@ -596,24 +365,6 @@ var last=JSON.stringify(obj);
 
 *   优雅降级 ：一开始就构建完整的功能，然后再针对低版本浏览器进行兼容
 
-### 43、说说严格模式的限制
-
-*   变量必须声明后再使用
-*   函数的参数不能有同名属性，否则报错
-*   不能使用`with`语句
-*   禁止`this`指向全局对象
-
-### 45、谈谈你对ES6的理解
-
-*   新增模板字符串（为`JavaScript`提供了简单的字符串插值功能）
-*   箭头函数
-*   `for-of`（用来遍历数据—例如数组中的值。）
-*   `arguments`对象可被不定参数和默认参数完美代替。
-*   `ES6`将p`romise`对象纳入规范，提供了原生的`Promise`对象。
-*   增加了`let`和`const`命令，用来声明变量。
-*   增加了块级作用域。
-*   `let`命令实际上就增加了块级作用域。
-*   还有就是引入`module`模块的概念
 
 ### 46、ECMAScript6 怎么写class么，为什么会出现class这种东西?
 
@@ -704,58 +455,6 @@ var last=JSON.stringify(obj);
 
 
 ## 编程题
-
-### 1、写一个通用的事件侦听器函数
-
-```source-js
- // event(事件)工具集，来源：github.com/markyun
-    markyun.Event = {
-
-        // 视能力分别使用dom0||dom2||IE方式 来绑定事件
-        // 参数： 操作的元素,事件名称 ,事件处理程序
-        addEvent : function(element, type, handler) {
-            if (element.addEventListener) {
-                //事件类型、需要执行的函数、是否捕捉
-                element.addEventListener(type, handler, false);
-            } else if (element.attachEvent) {
-                element.attachEvent('on' + type, function() {
-                    handler.call(element);
-                });
-            } else {
-                element['on' + type] = handler;
-            }
-        },
-        // 移除事件
-        removeEvent : function(element, type, handler) {
-            if (element.removeEventListener) {
-                element.removeEventListener(type, handler, false);
-            } else if (element.datachEvent) {
-                element.detachEvent('on' + type, handler);
-            } else {
-                element['on' + type] = null;
-            }
-        },
-        // 阻止事件 (主要是事件冒泡，因为IE不支持事件捕获)
-        stopPropagation : function(ev) {
-            if (ev.stopPropagation) {
-                ev.stopPropagation();
-            } else {
-                ev.cancelBubble = true;
-            }
-        },
-        // 取消事件的默认行为
-        preventDefault : function(event) {
-            if (event.preventDefault) {
-                event.preventDefault();
-            } else {
-                event.returnValue = false;
-            }
-        },
-        // 获取事件目标
-        getTarget : function(event) {
-            return event.target || event.srcElement;
-        }
-```
 
 ### 5、编写一个方法 求一个字符串的字节长度
 
