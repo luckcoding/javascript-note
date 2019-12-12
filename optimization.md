@@ -1,29 +1,3 @@
-## HTML， HTTP，web综合问题
-
-### 10、`HTML5`的离线储存怎么使用，工作原理能不能解释一下？
-
-*   在用户没有与因特网连接时，可以正常访问站点或应用，在用户与因特网连接时，更新用户机器上的缓存文件
-
-*   原理：`HTML5`的离线存储是基于一个新建的`.appcache`文件的缓存机制(不是存储技术)，通过这个文件上的解析清单离线存储资源，这些资源就会像`cookie`一样被存储了下来。之后当网络在处于离线状态下时，浏览器会通过被离线存储的数据进行页面展示
-
-*   如何使用：
-
-    *   页面头部像下面一样加入一个`manifest`的属性；
-    *   在`cache.manifest`文件的编写离线存储的资源
-    *   在离线状态时，操作`window.applicationCache`进行需求实现
-
-```source-js
-CACHE MANIFEST
-#v0.11
-CACHE:
-js/app.js
-css/style.css
-NETWORK:
-resourse/logo.png
-FALLBACK:
-/ /offline.html
-```
-
 
 ### 13、iframe的缺点
 * 阻塞主页面的`Onload`事件
@@ -120,11 +94,6 @@ FALLBACK:
 * `base64`的体积约为原图的`4/3`
 *   缺点是需要消耗`CPU`进行编解码
 
-### 34、伪类和伪元素的区别
-
-*   伪类表状态
-*   伪元素是真的有元素
-*   前者单冒号，后者双冒号
 
 ## JavaScript
 
@@ -162,49 +131,6 @@ FALLBACK:
 *   作用域链的作用是保证执行环境里有权访问的变量和函数是有序的，作用域链的变量只能向上访问，变量访问到`window`对象即被终止，作用域链向下访问变量是不被允许的
 *   简单的说，作用域就是变量与函数的可访问范围，即作用域控制着变量与函数的可见性和生命周期
 
-### 3、JavaScript原型，原型链 ? 有什么特点？
-
-*   每个对象都会在其内部初始化一个属性，就是`prototype`(原型)，当我们访问一个对象的属性时
-
-*   如果这个对象内部不存在这个属性，那么他就会去`prototype`里找这个属性，这`个prototype`又会有自己的`prototype`，于是就这样一直找下去，也就是我们平时所说的原型链的概念
-
-*   关系：`instance.constructor.prototype = instance.__proto__`
-
-*   特点：
-
-    *   `JavaScript`对象是通过引用来传递的，我们创建的每个新对象实体中并没有一份属于自己的原型副本。当我们修改原型时，与之相关的对象也会继承这一改变
-*   当我们需要一个属性的时，`Javascript`引擎会先看当前对象中是否有这个属性， 如果没有的
-
-*   就会查找他的`Prototype`对象是否有这个属性，如此递推下去，一直检索到 `Object` 内建对象
-
-
-### 5、Javascript如何实现继承？
-
-*   构造继承
-
-*   原型继承
-
-*   实例继承
-
-*   拷贝继承
-
-*   原型`prototype`机制或`apply`和`call`方法去实现较简单，建议使用构造函数与原型混合方式
-
-```source-js
- function Parent(){
-        this.name = 'wang';
-    }
-
-    function Child(){
-        this.age = 28;
-    }
-    Child.prototype = new Parent();//继承了Parent，通过原型
-
-    var demo = new Child();
-    alert(demo.age);
-    alert(demo.name);//得到被继承的属性
-  }
-```
 
 ### 6、谈谈This对象的理解
 
@@ -245,10 +171,6 @@ var module1 = (function(){
     *   使用构造函数的方法，即解决了重复实例化的问题，又解决了对象识别的问题，该模式与工厂模式的不同之处在于
     *   直接将属性和方法赋值给 `this`对象;
 
-### 19、为什么要有同源限制？
-
-*   同源策略指的是：协议，域名，端口相同，同源策略是一种安全协议
-*   举例说明：比如一个黑客程序，他利用`Iframe`把真正的银行登录页面嵌到他的页面上，当你使用真实的用户名，密码登录时，他的页面就可以通过`Javascript`读取到你的表单中`input`中的内容，这样用户名，密码就轻松到手了。
 
 ### 20、offsetWidth/offsetHeight,clientWidth/clientHeight与scrollWidth/scrollHeight的区别
 
@@ -320,8 +242,6 @@ var module1 = (function(){
 *   引用数据类型存储在堆(`heap`)中的对象,占据空间大、大小不固定,如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其
 *   在栈中的地址，取得地址后从堆中获得实体
 
-[![](https://camo.githubusercontent.com/d1947e624a0444d1032a85800013df487adc5550/687474703a2f2f7777772e77337363686f6f6c2e636f6d2e636e2f692f63745f6a735f76616c75652e676966)](https://camo.githubusercontent.com/d1947e624a0444d1032a85800013df487adc5550/687474703a2f2f7777772e77337363686f6f6c2e636f6d2e636e2f692f63745f6a735f76616c75652e676966)
-
 
 ### 34、eval是做什么的？
 
@@ -329,35 +249,6 @@ var module1 = (function(){
 *   应该避免使用`eval`，不安全，非常耗性能（`2`次，一次解析成`js`语句，一次执行）
 *   由`JSON`字符串转换为JSON对象的时候可以用`eval，var obj =eval('('+ str +')')`
 
-
-### 38、JSON 的了解？
-
-*   `JSON(JavaScript Object Notation)` 是一种轻量级的数据交换格式
-
-*   它是基于`JavaScript`的一个子集。数据格式简单, 易于读写, 占用带宽小
-
-*   `JSON`字符串转换为JSON对象:
-
-```
-var obj =eval('('+ str +')');
-var obj = str.parseJSON();
-var obj = JSON.parse(str);
-
-```
-
-*   `JSON`对象转换为JSON字符串：
-
-```
-var last=obj.toJSONString();
-var last=JSON.stringify(obj);
-
-```
-
-
-### 40、同步和异步的区别?
-
-*   同步：浏览器访问服务器请求，用户看得到页面刷新，重新发请求,等请求完，页面刷新，新内容出现，用户看到新内容,进行下一步操作
-*   异步：浏览器访问服务器请求，用户正常操作，浏览器后端进行请求。等请求完，页面不刷新，新内容也会出现，用户看到新内容
 
 ### 41、渐进增强和优雅降级
 

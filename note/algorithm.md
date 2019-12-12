@@ -591,3 +591,55 @@ function pack (weightLimit, weightArray, valueArray, account) {
   return dp[account][weightLimit]
 }
 ```
+
+## 双向链表
+
+```js
+function Link(data, pre, next) {
+  this.data = data
+  this.pre = pre // 指向前一个指针
+  if (this.pre) {
+    pre.next = this
+  }
+  this.next = next // 指向后一个指针
+}
+Link.prototype.insert = function (node) {
+  if (this.next && this.next.pre) {
+    this.next.pre = node // 原来的后续节点的前一个变为新的
+  }
+  node.next = this.next // 新节点的下一个为原来的下一个
+  node.pre = this // 原来的上一个为当前此节点
+  this.next = node // 当前的下一个为新节点
+}
+Link.prototype.remove = function () {
+  this.next.pre = this.pre
+  this.pre.next = this.next
+}
+Link.prototype.console = function() {
+  if (this.next) {
+    return this.data + this.next.console
+  } else {
+    return this.data
+  }
+}
+// 反转
+Link.prototype.reverse = function () {
+  var tmp = null
+  var self = this
+
+  function _reverse () {
+    if (!this.next) {
+      this.pre = null
+      this.next = tmp
+      return this
+    } else {
+      this.pre = this.next
+      this.next = tmp
+      tmp = this
+      return _reverse.call(this.pre)
+    }
+  }
+
+  return _reverse.call(this)
+}
+```

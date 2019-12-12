@@ -43,47 +43,15 @@ Component.prototype.forceUpdate = function(callback) {
 }
 ```
 
-* react package内并不包含实现内容，其实现内容位于react-dom、react-native等等的renderer中。
+## 虚拟DOM
 
-```js
-export function createContext(...) {
-	...
-	const context = {
-		$$typeof: REACT_CONTEXT_TYPE, // 使用Symbol对象
-		...
-	}
-}
-```
+虚拟DOM是描述DOM树的对象，目的是将所有操作统一处理完之后再进行DOM更新。（常规的树比较算法的时间复杂度为立方阶O(n<sup>3</sup>)，react diff 为线性阶O(n)）
 
-<a id="原理"></a>
+* `tree diff`对比2棵树的同一层次的节点
+* `component diff`通过不同组件类型生成不同的树形结构，同时允许设置`shouldComponentUpdate()`对进行优化
+* `element diff`通过唯一`key`进行比较
 
-## React 原理
-
-> [深入理解React虚拟DOM](https://www.cnblogs.com/yumingxing/p/9438457.html)
-
-### 一、什么是虚拟DOM
-
-模拟DOM树的JavaScript对象树。
-
-### 二、为什么使用虚拟DOM
-
-目的是将所有操作统一处理完之后更新一次DOM，减少了大量的DOM渲染。
-
-### 三、虚拟DOM的原理
-
-当Node节点更新，虚拟DOM会比较2棵DOM树。（常规的树比较算法的时间复杂度为立方阶O(n<sup>3</sup>)，react diff 为线性阶O(n)）
-
-* **分层求异**对 tree diff 进行算法优化
-* 通过不同组件类型生成不同的树形结构，同时允许设置`shouldComponentUpdate()`对 component diff 进行优化
-* 通过**设置*唯一`key`*，对element diff进行算法优化
-
-## 性能优化
-
-* 谨慎分配 `state`，避免不必要的`render`
-* 状态合并
-* 使用纯函数式组件
-* 使用高阶组件替代继承
-* 控制更新
+<a id="生命周期"></a>
 
 ## 生命周期
 
@@ -102,7 +70,28 @@ export function createContext(...) {
 	6. `getSnapshotBreforeUpdate()`
 	7. `componentDidUpdate()`
 3. 卸载阶段: `componentWillUnmount()`
-4. 错误处理: `componentDidCatch()`
+4. 错误处理: 
+	1. `static getDerivedStateFromError()`
+	2. `componentDidCatch()`
+
+### 更新机制
+
+* `setState`后会进入到`shouldComponentUpdate`钩子函数，由该函数的返回值**决定是否调用`render`**
+* 如果包含子组件，那么父组件`render`完成后进入子组件的生命周期，直到子组件的生命周期完成后，回到父组件`render`的后续生命周期
+* `render`返回虚拟DOM，在其后进行`diff`计算，从而决定是否需要重新渲染
+* `PureComponent`是浅比较
+
+```js
+// 父子组件初始化阶段的生命周期
+Parent.constructor
+Parent.getDerivedStateFromProps
+Parent.render
+Child.constructor
+Child.getDerivedStateFromProps
+Child.render
+Child.componentDidMount
+Parent.componentDidMount
+```
 
 ### getDerivedStateFromPros(nextProps, prevState)
 
@@ -115,6 +104,27 @@ export function createContext(...) {
 ### getSnapshotBreforeUpdate(prevProps, prevState)
 
 其返回值会传入`componentDidUpdate(prevProps, prevState, fromSnapData)`
+
+## setState
+
+
+
+* 第一个参数可以是对象，也可以是`updater`函数。
+* 第二个参数是回调函数，在`componentDidUpdate`后执行
+* `setState`更新过程是异步的，会合并所有的更新（如果是`addEventListener`或`setTimeout`里，则不会合并更新）
+
+## forceUpdate
+
+跳过`shouldComponentUpdate()`直接调用`render()`钩子函数
+
+## 性能优化
+
+* 谨慎分配`state`，避免不必要的`render`
+* 状态合并
+* 使用纯函数式组件
+* 使用高阶组件替代继承
+* 控制更新
+* 副作用代码放在`commit`阶段
 
 ## Fiber
 
@@ -167,7 +177,20 @@ ReactDom.render(<App />, document.getElementById('root'))
 
 hooks的数据作为Fiber组件上的节点。
 
+### 调用原理
+
+基于`FunctionalComponent`
+
+1. 首先调用`prepareToUseHooks`初始化一些模块内的全局变量
+2. 调用`finishHooks`
+
+
+
 ## 事件合成
 
 * 事件委托：把所有事件绑定到最外层，使用一个统一的事件监听器
 * 自动绑定：每个事件的上下文均指向所属组件
+
+## setState
+
+setState和forceUpdate

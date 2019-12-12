@@ -96,8 +96,8 @@ this.close() // 子线程关闭自己
 
 不同的任务源会被分配到不同的Task队列中，任务源分为**微任务（jobs）**和**宏任务（task）**。
 
-* 微任务：`promise`
-* 宏任务：`script`、`setTimeout`、`setInterval`、UI rendering。
+* 微任务：`promise`、`Object.observe`
+* 宏任务：script、`setTimeout`、`setInterval`、`requestAnimationFarme`、UI rendering。
 
 1. 首先执行全局script同步代码，这些同步代码有一些是同步语句，有一些是异步语句（如setTimeout）
 2. 全局script代码执行完毕后，执行栈会被清空
@@ -122,7 +122,7 @@ nodejs 的 Event Loop中，宏任务队列的回调任务有**6个阶段**
 6. `close callbacks` 执行 `xx.on('close', ...)` 这些 `callbacks`
 
 * 宏任务：主要有`times`、`I/O callbacks`、`setImmediate`、`close callbacks` 4个
-* 微任务：`process.nextTick`、`promise`等2个
+* 微任务：`process.nextTick`、`promise`、`Object.observe`等
 
 1. 执行全局script的同步代码
 2. 执行微任务，先执行`process.nextTick`中的所有任务，再执行 `promise`

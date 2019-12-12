@@ -1,5 +1,6 @@
 # Summary
 * CSS
+  * [HTML渲染过程](css.md#HTML渲染过程)
   * [link与@import](css.md#link-import)
   * [重绘与回流](css.md#重绘与回流)
   * [FOUC](css.md#FOUC)
@@ -57,7 +58,7 @@
     * [原型、原型链、对象、构造函数](basis.md#原型、原型链、对象、构造函数)
     * [箭头函数与普通函数](basis.md#箭头函数与普通函数)
   * [var、let、const](basis.md#var、let、const)
-  * [隐式转化](note/toutiao.md#隐式转化)
+  * [类型转化](basis.md#类型转化)
 
 
 * 进阶
@@ -68,14 +69,19 @@
   * [XMLHttpRequest](note/XMLHttpRequest.md)
 
 
+* Promise
+  * [Promise实现](note/promise.md#Promise)
+  * [Promise.all实现](note/promise.md#PromiseAll)
+  * [Promise.retry实现](note/promise.md#PromiseRetry)
+  * [Promise串行](note/promise.md#Promise串行)
+
+
 * 代码实现
   * 实现
     * [call实现](note/solution/achieve.md#call)
     * [apply实现](note/solution/achieve.md#apply)
     * [bind实现](note/solution/achieve.md#bind)
     * [filter实现](note/solution/achieve.md#filter)
-    * [Promise.all实现](note/solution/achieve.md#PromiseAll)
-    * [Promise.retry实现](note/solution/achieve.md#PromiseRetry)
     * [instanceof实现](note/solution/achieve.md#instanceof)
     * [new实现](note/solution/achieve.md#new)
   * 数组

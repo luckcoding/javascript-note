@@ -5,25 +5,40 @@
 `AbortController`代表一个控制器对象，允许在需要时终止一个或多个DOM请求。
 
 ```js
-function ajax (options = {}) {
-     const { url, timeout, ...opts } = options
-     
-     let promises = [fetch(url, opts)]
+function ajax (url = '', options = {}) {
+    const { timeout, ...opts } = options
 
-     const controller = new AbortController()
-     const { signal } = controller
-     const TIMEOUT = new Response('timeout', { status: 504, statusText: 'timeout' })
+    const ctrl = new AbortController()
+    const signal = ctrl.signal
+    const TIMEOUT = new Response('timeout', { status: 504, statusText: 'timeout' })
+    
+    const send = fetch(url, { ...rest, signal })
 
-     if (timeout) {
-          promises.push(() => new Promise(resolve => {
-               setTimeout(() => {
-                    resolve(TIMEOUT)
-                    controller.abort()
-               }, timeout)
-          }))
-     }
+    let promises = [send]
 
-     return Promise.race(promises)
+    if (timeout) {
+        promises.push(() => new Promise(resolve => {
+            setTimeout(() => {
+                resolve(TIMEOUT)
+                ctrl.abort()
+            }, timeout)
+        }))
+    }
+
+    this.abort = function () {
+        promises.push(() => new Promise(resolve => {
+            setTimeout(() => {
+                resolve(TIMEOUT)
+                ctrl.abort()
+            })
+        }))
+    }
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(Promise.race(promises))
+        })
+    })
 }
 ```
 
@@ -37,25 +52,27 @@ function request(urls, maxNumber, callback) 要求编写函数实现，根据url
 
 ```js
 function request(urls = [], maxNumber = 1, callback) {
-     const len = urls.length
-     let index = 0
-     let counter = 0
+    const len = urls.length
+    let count = 0, index = 0
 
-     function _request () {
-          while (index < len && maxNumber > 0) {
-               maxNumber-- // 任务 -1
-               fetch(urls[index++]).finally(() => {
-                    maxNumber++ // 执行完后任务池 +1
-                    counter++
-                    if (counter === len) {
-                         return callback()
-                    } else {
-                         _request()
-                    }
-               })
-          }
-     }
-     _request()
+    async function _request() {
+        while (index < len && maxNumber > 0) {
+            maxNumber-- // 并发数 -1
+            try {
+                await fetch(urls[index++])
+            } finally {
+                count++
+                maxNumber++
+                if (count === len) {
+                    return callback()
+                } else {
+                    _request()
+                }
+            }
+        }
+    }
+    
+    _request()
 }
 ```
 
@@ -93,46 +110,62 @@ Eat supper
 > 链式调用、任务队列、流程控制
 
 ```js
-function L(name) {
-    this.name = name
-    this.queue = []
-}
 
-L.prototype.next = function () {
-    var fn = this.queue.shift()
-    fn && fn()
-}
+class LazyManBase {
+    constructor(name) {
+        this.name = name
+        this.queue = []
 
-L.prototype.eat = function (food) {
-    this.queue.push(() => {
-        console.log('Eat ' + food + '~')
-        this.next()
-    })
-    return this
-}
+        this.say()
 
-L.prototype.sleep = function (time) {
-    this.queue.push(() => {
         setTimeout(() => {
-            console.log('Wake up after ' + time)
             this.next()
-        }, time)
-    })
-    return this
-}
+        })
+    }
 
-L.prototype.sleepFirst = function (time) {
-    this.queue.unshift(() => {
-        setTimeout(() => {
-            console.log('Wake up after ' + time)
+    next () {
+        const fn = this.queue.shift()
+        fn && fn()
+    }
+
+    say () {
+        this.queue.push(() => {
+            console.log('Hi This is' + this.name + '!')
             this.next()
-        }, time)
-    })
-    return this
+        })
+    }
+
+    eat(food = '') {
+        this.queue.push(() => {
+            console.log('Eat ' + food + '~')
+            this.next()
+        })
+        return this
+    }
+
+    sleep(time = 0) {
+        this.queue.push(() => {
+            setTimeout(() => {
+                console.log('Wake up after ' + time)
+                this.next()
+            }, time * 1000)
+        })
+        return this
+    }
+
+    sleepFirst(time = 0) {
+        this.queue.unshift(() => {
+            setTimeout(() => {
+                console.log('Wake up after ' + time)
+                this.next()
+            }, time * 1000)
+        })
+        return this
+    }
 }
 
 function LazyMan (name) {
-    return new L(name)
+    return new LazyManBase(name)
 }
 ```
 

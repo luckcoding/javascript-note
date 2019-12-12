@@ -61,16 +61,13 @@ function curry (fn, ...args) {
 > 使用场景: 联想搜索时避免立即触发查询.
 
 ```js
-function debounce (func, time) {
-    var timer = null
-    var self = this
-    return function () {
-        if (timeout) {
-            clearTimeout(timeout)
-        }
-        timeout = setTimeout(() => {
-            func.apply(self, arguments)
-        }, time)
+function debounce (func, dely = 0) {
+    let timer = null
+    return (...args) => {
+        timer && clearTimeout(timer)
+        timer = setTimeout(() => {
+            func.apply(this, args)
+        }, dely)
     }
 }
 ```
@@ -80,18 +77,16 @@ function debounce (func, time) {
 > 使用场景: 滚动时触发接口请求.
 
 ```js
-function throttle (func, time) {
-    var canRun = true
-    var self = this
-    return function () {
-        if (!canRun) {
-            return
+function throttle (func, dely = 0) {
+    let canRun = true
+    return (...args) => {
+        if (canRun) {
+            canRun = false
+            setTimeout(() => {
+                func.apply(this, args)
+                canRun = true
+            }, dely)
         }
-        canRun = false
-        setTimeout(() => {
-            func.apply(self, arguments)
-            canRun = true
-        }, time)
     }
 }
 ```
@@ -114,10 +109,11 @@ function deepClone(obj) {
 
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
-            if (typeof obj[key] === 'object' && obj[key] !== null) {
-                newObj[key] = deepClone(obj[key])
+            const current = obj[key]
+            if (typeof current === 'object' && current !== null) {
+                newObj[key] = deepClone(current)
             } else {
-                newObj[key] = obj[key]
+                newObj[key] = current
             }
         }
     }
@@ -143,7 +139,7 @@ Parent.prototype.say = function () {
 }
 
 function Child(name, age, sex) {
-    Parent.call(this, name, age)
+    Parent.call(this, name, age) // 绑定this到父类
     this.sex = sex
 }
 Child.prototype = Object.create(Parent.prototype)

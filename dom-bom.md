@@ -174,26 +174,8 @@ if (typeof pageWidth !== 'number') {
 
 #### 重新加载
 
-* `location.reload()`。重新加载（有可能从缓存中加载
+* `location.reload()`。重新加载（有可能从缓存中加载）
 * `location.reload(true)`。重新加载（从服务器重新加载）
-
----
-
-<a id="history"></a>
-
-## history
-
-例子 | 说明
------- | ------
-`history.go(-1)` | 后退一页
-`history.go(2)` | 前进2页
-`history.back()` | 后退一页
-`history.forward()` | 前进一页
-`history.length` | 历史记录数量
-
----
-
-## getBoundingClientRect 与 offsetTop 获取的 top 的区别
 
 ---
 
@@ -217,3 +199,32 @@ document.cookie = 'namv=value;expires=时间/max-age=秒'
 ### localStorage
 
 除非主动清除，否则存储是永久的。大小限制一般为5M，仅保存在客户端中，不参与服务端通讯。
+
+### Application Cache
+
+存储静态资源。
+
+```html
+<html manifest="xx.appcache">
+```
+
+```
+# .appceche配置
+
+CACHE MAINFEST
+
+# 缓存列表
+CACHE:
+1.jpg
+1.js
+1.css
+http://www.baidu.com/2.js
+
+# 不缓存
+NETWORK:
+2.jpg
+
+# 缓存失败取第二个
+FALLBACK
+3.jpg/4.jpg
+```

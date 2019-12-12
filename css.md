@@ -1,3 +1,29 @@
+<a id="HTML渲染过程"></a>
+
+## HTML渲染过程
+
+![HTMLCSSRender](./asset/HTMLCSSRender.png)
+
+* HTML解析器生成DOM树
+* CSS解析器生成Style Rules
+
+2条线程同时进行，之后组合生成渲染树进行屏幕绘制。
+
+### DOM树的构建
+
+1. 读取并转换原始字节。`Bytes[3C 62 6F...] -> Characters[<hmtl><head>...]`
+2. 令牌化。`-> Tokens[StartTag:html,Start:head...]`
+3. 词法分析
+4. DOM构建
+
+### CSS树的构建
+
+![CSSParser](./asset/CSSParser.jpeg)
+
+**CSS选择器解析的顺序是从右往左**，这样导致回溯查找，减轻查询压力。
+
+---
+
 <a id="link-import"></a>
 
 ## `link`与`@import`
@@ -11,8 +37,36 @@
 
 ## 重绘与回流
 
-* 重绘：布局、尺寸、隐藏等变化会引用重绘（即影响了布局）
-* 回流：颜色、背景等变化会引起回流（即影响了外观）
+* 回流：布局、尺寸、隐藏等变化会引起回流（即影响了布局）
+* 重绘：颜色、背景等变化会引起重绘（即影响了外观）
+* **回流必将引起重绘**
+
+### 触发重绘的属性
+
+* `color`
+* `visibility`
+* `background`、`background-****`、
+* `border-style`、`border-radius`
+* `outline`、`outline-****`
+* `box-shadow`
+* `text-decoration`
+
+### flush队列
+
+* `offsetTop`、`offsetWidth`等等
+* `scrollTop`、`scrollHeight`等等
+* `clientWidth`、`clientTop`等等
+* `getComputedStyle()`
+
+浏览器会缓存此类属性，在读取时会触发回流。
+
+### 优化
+
+* 节点离线处理
+    * 使用`DocumentFragment`，引发一次回流和重绘
+    * 利用`display: none`，引发2次回流和重绘
+* 利用浮动元素使节点脱离动画流，减少回流的规模
+* 缓存会引起浏览器flush队列的属性
 
 ---
 
@@ -176,16 +230,32 @@ ID | 0100
 .inner {
     display: table-cell;
     text-align: center;
-    vertical-align: center;
+    vertical-align: middle;
 }
 </style>
 ```
 
 ---
 
+<a id="布局模型"></a>
+
+## 布局模型
+
+CSS有3中常见的布局模式
+
+* 流动布局（flow）。块级元素自上而下分布，行内元素从左到右分布
+* 浮动布局（float）。`float:left|right;`
+* 层布局（Layer）。`position:absolute|relative|fixed`
+
+> `z-index`浮动元素中无效，在有定位属性`position:absolute|relative|fixed`时，才有效
+
+---
+
 <a id="BFC"></a>
 
 ## 块级格式化上下文 BFC（Block Formatting Context）
+
+**属于流动布局模式**，决定了元素如何对其内容进行定位，以及与其他元素的相互关系。
 
 ### 创建BFC方式
 
@@ -211,9 +281,9 @@ ID | 0100
 
 ### BFC能解决的问题
 
-* 父元素塌陷
-* 外边距重叠
-* 清除浮动
+* 处理**父元素塌陷**（子元素如果为浮动元素，会导致父元素无法撑开，其上下边界重合）
+* 阻止**外边距重叠**（标准文档流中，块级元素垂直方向的margin以最大的为准）
+* **清除浮动**
 
 ---
 

@@ -54,3 +54,55 @@ GIT + Jenkins
 * L 里式替换（LSP）：一个对象可由其子类代替
 * I 接口分离（ISP）：客户不应该被强迫依赖它不实用的方法
 * D 依赖倒置（DIP）：抽象不依赖具体，具体依赖于抽象
+
+---
+
+## nginx负载均衡
+
+```t
+# 负载均衡服务器列表
+# weight 占比几率
+upstream baidu {
+    server 192.168.0.0.1 weight=1;
+    server 192.168.0.0.2 weight=1;
+    server 192.168.0.0.3 weight=2;
+}
+server {
+    location / {
+        proxy_pass http://baidu;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forward-For $remote_addr;
+    }
+}
+```
+
+---
+
+<a id="发布订阅与观察者模式"></a>
+
+## 发布订阅与观察者模式
+
+![](asset/pub-sub.png)
+
+* 观察者模式中**观察者和目标直接交互**
+* 发布订阅由调度中心进行处理，订阅者和发布者互不干扰
+
+---
+
+<a id="图片懒加载"></a>
+
+## 图片懒加载
+
+* 把真正路径设置在`data-`属性上
+* 监听图片是否在可视范围内，如果在就把路径赋值给`src`
+
+---
+
+<a id="移动端高清适配方案"></a>
+
+## 移动端高清适配方案
+
+* 设置`viewport`。`<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">`
+* 字体使用`rem`
+* 图片多倍图
+* 使用`transform`设处理1像素边框

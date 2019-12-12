@@ -18,6 +18,19 @@
 
 ---
 
+## DNS解析
+
+1. 检查浏览器缓存是否有该域名对应的IP地址
+2. 检查本机系统是否缓存过IP
+3. 向本地域名服务器发起域名解析请求
+4. 向根域名解析服务器发起域名解析请求，无的化返回gTLD域名解析服务器地址
+5. 向gTLD发起解析请求，返回Name Server服务器地址（域名服务商）
+6. Name Server服务器返回IP
+7. 本地域名服务器解析，判断TTL时间进行缓存
+8. 返回客户端
+
+---
+
 <a id="缓存"></a>
 
 ## 缓存
@@ -43,10 +56,14 @@
 通过`Expires`或`Cache-Control`判断资源是否在缓存有效期内。如果命中则直接取缓存，此为强缓存，其http状态为200，且不会与服务器通信。
 
 * `Expores`：服务器绝对时间，是GMT格式的时间字符串，表示资源失效的时间；
-* `Cache-Control`：表示资源有效期，单位为秒
-  * `Cache-Control: max-age=3600`：缓存有效期为3600秒
-  * `Cache-Control: no-cache`：不使用本地缓存
-  * `Cache-Control: no-store`：不缓存数据
+* `Cache-Control`：表示资源有效期，单位为秒（HTTP1.1引入）
+  * `max-age=3600`：缓存有效期为3600秒
+  * `no-cache`：不使用本地缓存
+  * `no-store`：不缓存数据
+  * `public`：代表http返回经过的任何路径中（代理服务器、浏览器等）都可以进行缓存
+  * `private`：只有发起请求的浏览器才可以进行缓存
+  * `s-maxage`：同`max-age`，只有在代理服务器中才会生效。如果代理服务器设置了`max-age`和`s-maxage`，只采用`s-maxage`
+  * 多值写法：`Cache-Control: max-age=200,public`
 
 #### 协商缓存
 
@@ -116,6 +133,16 @@ TCP（传输控制协议）是一种面向连接的、可靠的、基于字节�
 
 ![TCP四次挥手](../asset/TCP4.png)
 
+#### TCP如何保证传输可靠
+
+* 将数据**截断**成合理的长度
+* 当TCP发出一个报文段，启动一个定时器，如果不能及时收到一个确认，将**重发这个报文段**
+* 当TCP收到另一端TCP发来的数据，**校验后**发送一个确认消息
+* 校验出有误时，丢弃报文段，不做响应，TCP发送端超时后会**重发数据**
+* TCP报文段作为IP数据报，达到可能会失序，TCP接受端会对**数据重新排序后交给应用层**
+* TCP报文段作为IP数据报，可能会发生重复，对**重复数据进行丢弃**
+* TCP可以进行**流量控制**，防止较快主机致较慢主机的缓存区溢出
+
 ### UDP
 
 UDP（用户数据报协议）无连接、不可靠，提供面向事务的简单传输。
@@ -174,6 +201,13 @@ User-Agent | 浏览器标识 |
 * `HEAD` 获取报文头，不返回报文体
 * `DELETE` 删除对象URI资源
 * `OPTIONS` 查询相应URI支持的HTTP方法
+
+#### POST与GET的区别
+
+* 语意不同
+* GET请求可被缓存，POST不可
+* GET没有请求体（除非强制设置），在TCP中只需传输一次（而非一个包）；POST将数据放在请求体中
+* GET有最大1024字节长度大小限制
 
 ### HTTP状态码
 
@@ -271,6 +305,9 @@ http1.0 需要设置`Connection: keep-alive`才能复用TCP连接，http1.1默�
 
 * 敏感cookie使用HttpOnly
 * 用户输入进行转义
+* 设置内容安全策略`Content-Security-Policy`头
+  * `'Content-Security-Policy': 'default-src http: https:'`：表示只能通过外联的方式引用css或js
+  * `'Content-Security-Policy': 'default-src \'self\''`：表示只能加载同域下的资源
 
 > 请求默认都会带上cookie，token需要自己设置，这也是导致cookie会被XSS，而token不会被XSS的原因，但token会被用于CSRF
 
@@ -293,6 +330,14 @@ http1.0 需要设置`Connection: keep-alive`才能复用TCP连接，http1.1默�
 * 表单过滤，字符转义
 * 数据库权限最小化
 * 使用预编译语句，而不是直接拼接sql
+
+### HTTP头攻击
+
+HTTP协议在response header与content之间，有一个空格（两组CRLF字符），利用空格将执行脚本注入到请求header中，达到攻击目的
+
+#### 防御
+
+过滤所有的response headers字段中的非法字符，尤其是CRLF字符
 
 ---
 
@@ -338,7 +383,7 @@ window.addEventListener('message', function (e) {
 
 #### jsonp
 
-只支持`GET`
+script、img、link等标签是可以跨域的，只支持`GET`
 
 ```js
 // 客户端
@@ -429,3 +474,105 @@ function p () {
 
 * 对象赋值`null`，解除循环引用
 * 慎用闭包
+
+---
+
+## 流量劫持
+
+### 常见劫持
+
+* 域名劫持：劫持域名的DNS解析结果，将HTTP劫持到特定IP，使客户端和攻击者的服务器建立TCP连接
+* 流量修改：数据通路上对页面进行固定的内容插入
+
+### 原因
+
+HTTP协议没有办法对通讯对方的身份进行校验，以及无法对据数完整性进行校验
+
+### 解决
+
+使用HTTPS
+
+---
+
+<a id="service-worker"></a>
+
+## service worker
+
+service worker是独立于当前页面运行在浏览器后台进程的脚本。
+
+* 不能直接访问DOM。可通过`postMessage`通讯
+* 只能在HTTPS或localhost环境下运行
+* 不能使用xhr、localStorage，可使用fetch
+
+### 生命周期
+
+`注册sw` -> `安装` -> `激活(首次不生效，下次加载页面生效)` -> `处理fetch、message或被终止`
+
+### 更新
+
+1. 首次访问sw控制的页面时，sw会被立刻下载，之后浏览器至少每24小时会下载一次，这是浏览器自己的行为。
+2. 如果下载的ws与现有的sw不同，就会进行安装。此时旧的sw还在运行，新的sw完成安装后进入waiting状态
+3. 等所有已打开的页面都关闭后，就的sw停止，新的sw在下次打开时生效
+
+**如何保证立即更新**
+
+```js
+navigator.serviceWorker.addEventListener('controllerchange', () => {
+  window.location.reload(); // 刷新站点，避免新老sw交替问题
+})
+```
+
+---
+
+<a id="路由"></a>
+
+## 路由
+
+### hash
+
+* 路径`#`后面的部分，用作锚点在页面进行导航，不会引起页面刷新
+* 监听`hashchange`事件处理路由。触发`hashchange`的事件如下：
+  * 浏览器前进后退
+  * `<a>`标签改变
+  * `window.location`改变
+
+```js
+// 路由实现
+window.addEventListener('hashchange', handle)
+function handle () {
+  if (location.hash === '#/home') {}
+}
+```
+
+### history
+
+* 利用`pushState(data,title,url)`和`replaceState`改变URL的path部分，不会引起页面刷新
+* 监听`popstate`事件处理路由。但`pushState/replaceState`不会触发此事件，通过拦截`pushState/replaceState`、`<a>`标签的点击事件来处理路由
+
+```js
+// 路由实现
+window.addEventListener('popstate', handle)
+
+var linkList = document.querySelectorAll('a[href]')
+linkList.forEach(function (element) {
+  element.addEventListener('click', function (event) {
+    e.preventDefault()
+    history.pushState(null, '', element.getAttribute('href'))
+    handle()
+  })
+})
+
+function handle () {
+  if (location.pathname === '/home') {}
+}
+```
+
+#### history API
+
+例子 | 说明
+------ | ------
+`history.go(-1)` | 后退一页
+`history.go(2)` | 前进2页
+`history.back()` | 后退一页
+`history.forward()` | 前进一页
+`history.length` | 历史记录数量
