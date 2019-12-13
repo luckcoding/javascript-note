@@ -165,11 +165,13 @@ if (typeof pageWidth !== 'number') {
 ### 位置操作
 
 #### 打开窗口的3种方法
+
 * `location.href = "http://www.baidu.com"`
 * `location.assign("http://www.baidu.com")`
 * `window.location = "http://www.baidu.com"`
 
 #### 替换窗口
+
 * `location.replace("http://www.baidu.com/")`。**不生成历史记录**
 
 #### 重新加载
@@ -228,3 +230,12 @@ NETWORK:
 FALLBACK
 3.jpg/4.jpg
 ```
+
+## 获取DOM节点的所有方法
+
+* `document.getElementById`
+* `document.getElementByName`
+* `document.getElementByTagName`
+* `document.getElementByClass`
+* `document.querySelector`
+* `document.querySelectorAll`

@@ -115,9 +115,7 @@ class LazyManBase {
     constructor(name) {
         this.name = name
         this.queue = []
-
         this.say()
-
         setTimeout(() => {
             this.next()
         })
@@ -207,9 +205,9 @@ class EventEmitter {
         }
     }
 
-    once(name, fn) {
+    once(name, cb) {
         const onlyOne = () => {
-            fn.apply(this, arguments)
+            cb.apply(this, arguments)
             this.off(name, onlyOne)
         }
         this.on(name, onlyOne)

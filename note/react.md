@@ -51,6 +51,11 @@ Component.prototype.forceUpdate = function(callback) {
 * `component diff`通过不同组件类型生成不同的树形结构，同时允许设置`shouldComponentUpdate()`对进行优化
 * `element diff`通过唯一`key`进行比较
 
+### key的作用
+
+* **准确判断当前节点是否在旧集合中**
+* 减少遍历次数
+
 <a id="生命周期"></a>
 
 ## 生命周期
@@ -106,8 +111,6 @@ Parent.componentDidMount
 其返回值会传入`componentDidUpdate(prevProps, prevState, fromSnapData)`
 
 ## setState
-
-
 
 * 第一个参数可以是对象，也可以是`updater`函数。
 * 第二个参数是回调函数，在`componentDidUpdate`后执行
@@ -193,4 +196,41 @@ hooks的数据作为Fiber组件上的节点。
 
 ## setState
 
-setState和forceUpdate
+`setState`的更新是异步的。**在非异步方法中，无论在多少个组件中调用多少个`setState`，它们都在最后一次`setState`后，全部放入`enqueueSetState`更新队列，然后执行一次统一的更新**
+
+```js
+// 更新过程
+enqueueSetState(instance) {
+	// 获取fiber
+	const fiber = getInstance(instance)
+	// 计算当前时间
+	const currentTime = requestCurrentTime()
+	// 计算fiber对象过期时间
+	const expirationTime = computeExpirationForFiber(currentTime, fiber)
+	// 创建update对象
+	const update = createUpdate(expirationTime)
+	// 进入待更新队列
+	enqueueUpdate(fiber, update)
+	// 任务调度
+	scheduleWork(fiber, expirationTime)
+}
+```
+
+## forceUpdate
+
+```js
+// 更新过程 和 setState一样，唯一不同是更新对象的tag值为ForceUpdate(2)
+// UpdateState: 0 更新
+// ReplaceState: 1 替换
+// ForceUpdate: 2 强制更新
+// CaptureUpdate: 3 捕获性更新
+function createUpdate() {
+	return {
+		tag: UpdateState,
+	}
+}
+```
+
+## ssr
+
+`renderToString`

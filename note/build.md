@@ -154,7 +154,7 @@ seajs.use('mA.js', function (m) {
 1. 初始化：从配置文件或shell读取或合并**得到最终的配置参数**，实例化插件`new Plugin()`
 2. 开始编译：初始化`Compiler`对象、加载插件，通过执行`Compiler.cun`开始编译
 3. 确定入口：根据`entry`找出所有入口文件
-4. 编译模块：从`entry`触发，调用`loader`对模块进行转换，同时找出模块依赖的模块，依次递归，知道所有依赖模块完成转换
+4. 编译模块：从`entry`出发，调用`loader`对模块进行转换，同时找出模块依赖的模块，依次递归，知道所有依赖模块完成转换
 5. 生成资源：根据入口与模块之前的依赖关系，组装成`chunk`代码块，并生成文件输出列表
 6. 写入资源：根据配置的输出路径和文件名，将文件写入，完成构建
 
@@ -166,7 +166,7 @@ seajs.use('mA.js', function (m) {
     * 加载loader代码
     * 获取pitch方法（`currentLoaderObject.pitch`），向loader传入`remainingRequest`、`previousRequest`等参数
     * 进入normal阶段，读取资源
-    * 执行`runSyscOrAsync`进行loader转换
+    * 执行`runSyncOrAsync`进行loader转换
     * 把转换后的内容复制给模块的`_source`属性，然后调用模块源码的解析、分析资源依赖
 
 ### loader与plugin区别

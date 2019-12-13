@@ -55,7 +55,7 @@
 
 通过`Expires`或`Cache-Control`判断资源是否在缓存有效期内。如果命中则直接取缓存，此为强缓存，其http状态为200，且不会与服务器通信。
 
-* `Expores`：服务器绝对时间，是GMT格式的时间字符串，表示资源失效的时间；
+* `Expires`：服务器绝对时间，是GMT格式的时间字符串，表示资源失效的时间；
 * `Cache-Control`：表示资源有效期，单位为秒（HTTP1.1引入）
   * `max-age=3600`：缓存有效期为3600秒
   * `no-cache`：不使用本地缓存
@@ -75,7 +75,7 @@
 #### 过程
 
 1. 浏览器第一次请求后，缓存服务端返回的资源以及`Expires`或`Cache-Control`、以及`Last-Modified`和`ETag`等信息
-2. 浏览器再次请求时，先判断`Cache-Control`是否命中缓存、再判断`Expires`是否命中强缓存
+2. 浏览器再次请求时，先通过`Cache-Control`再通过`Expires`判断是否命中强缓存
 3. 如果命中强缓存，就加载本地缓存，状态码为`200(from cache)`
 4. 如果未命中强缓存，浏览器再发送一次请求，并携带`If-None-Match`和`If-Modified-Since`，其值为上一次缓存的`Last-Modified`和`ETag`值
 5. 服务器先验证`ETag`、再验证`Last-Modified`是否命中协商缓存
@@ -187,7 +187,7 @@ Connection | 连接类型 | Connection: keep-alive
 Cookie | | 
 Content-Type | 请求体类型 | Context-Type: application/x-www-form-unlencoded
 Host | 服务器域名及端口 | Host: www.baidu.com
-If-Match | 缓存资源标记 | 
+If-None-Match | 缓存资源标记 | 
 If-Modified-Since | 缓存资源过期时间 | 
 Origin | 允许来源 | Origin: http://www.baidu.com
 Referer | 浏览器访问的前一个页面 | Referer: http://baidu.com/prev
@@ -220,16 +220,17 @@ User-Agent | 浏览器标识 |
 * `3XX`：重定向
   * `301 Moved Permanently` 请求的网页已永久移动到新位置。
   * `302 Found` 临时性重定向（GET:303、POST:307）。
-  * `303 See Other` 临时性重定向，且总是使用 `GET` 请求新的 `URI`。
-  * `304 Not Modified` 自从上次请求后，请求的网页未修改过。
+  * `304 Not Modified` 协商缓存
 *   `4XX`：客户端错误
   * `400 Bad Request` 服务器无法理解请求的格式，客户端不应当尝试再次使用相同的内容发起请求。
   * `401 Unauthorized` 请求未授权。
   * `403 Forbidden` 禁止访问。
   * `404 Not Found` 找不到如何与 `URI` 相匹配的资源。
+  * 405 请求方法被禁止
 * `5XX:` 服务器错误
   * `500 Internal Server Error` 最常见的服务器端错误。
   * `503 Service Unavailable` 服务器端暂时无法处理请求（可能是过载或维护）。
+  * 504 超时
 
 ### 一次HTTP事务过程
 
@@ -242,7 +243,7 @@ User-Agent | 浏览器标识 |
 
 ### TCP连接的复用（长连接/并发请求）
 
-http1.0 需要设置`Connection: keep-alive`才能复用TCP连接，http1.1默认开启复用，但是是串行请求
+http1.0 需要设置`Connection: keep-alive`才能复用TCP连接，http1.1默认开启复用，但是是串行请求，且最大请求数为6。
 
 ---
 
@@ -259,7 +260,7 @@ http1.0 需要设置`Connection: keep-alive`才能复用TCP连接，http1.1默�
 
 ### 多路复用实现
 
-基于**二进制帧**设计，每个帧会带有**流**的信息，在一个TCP连接中可以存在多条流
+基于**二进制帧**设计，每个帧会带有**流**的信息，其中帧**对数据进行了顺序标识**，在一个TCP连接中可以存在多条流，达到并行传输不会乱序的目的
 
 ---
 
@@ -284,7 +285,7 @@ http1.0 需要设置`Connection: keep-alive`才能复用TCP连接，http1.1默�
 
 > [websocket原理](https://www.cnblogs.com/nnngu/p/9347635.html)
 
-建立在TCP协议之上，握手阶段使用http协议，握手成功后告知浏览器切换成websocket协议，websocket是持久化的协议，且无同源策略。
+握手阶段使用TCP，握手成功后告知浏览器切换成websocket协议，websocket是持久化的协议，且无同源策略。
 
 ---
 
@@ -417,7 +418,7 @@ res.send(req.query.callback + '({})')
 * `Access-Control-Allow-Origin: '*'`：必设。表示接受的源，可为`*`
 * `Access-Control-Allow-Headers: 'token,custom'`：必设。表示接受的头信息字段，以`,`隔开的字符串
 * `Access-Control-Allow-Credentials: true`：可选。表示是否允许发送Cookie（Ajax需配置`(xhr.withCredentials = true`，且`Orgin`必须设置为完整的域名，否则无法跨域保存）
-* `Access-Control-Request-Method: 'POST,PUT'`：复杂请求必须设置。表示接受的请求类型
+* `Access-Control-Allow-Methods: 'POST,PUT'`：复杂请求必须设置。表示接受的请求类型
 
 > 注意: 复杂请求会先发送一个预请求**OPTIONS**
 
@@ -511,14 +512,14 @@ service worker是独立于当前页面运行在浏览器后台进程的脚本。
 ### 更新
 
 1. 首次访问sw控制的页面时，sw会被立刻下载，之后浏览器至少每24小时会下载一次，这是浏览器自己的行为。
-2. 如果下载的ws与现有的sw不同，就会进行安装。此时旧的sw还在运行，新的sw完成安装后进入waiting状态
-3. 等所有已打开的页面都关闭后，就的sw停止，新的sw在下次打开时生效
+2. 如果下载的sw与现有的sw不同，就会进行安装。此时旧的sw还在运行，新的sw完成安装后进入waiting状态
+3. 等所有已打开的页面都关闭后，旧的sw停止，新的sw在下次打开时生效
 
 **如何保证立即更新**
 
 ```js
 navigator.serviceWorker.addEventListener('controllerchange', () => {
-  window.location.reload(); // 刷新站点，避免新老sw交替问题
+  location.reload(); // 刷新站点，避免新老sw交替问题
 })
 ```
 

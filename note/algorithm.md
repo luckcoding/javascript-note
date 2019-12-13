@@ -156,9 +156,9 @@ function binarySeach(target, arr, start, end) {
 }
 
 // 不使用递归
-function binarySeach(target, arr, start, end) {
-  var start = start || 0
-  var end = end || arr.length - 1
+function binarySeach(target, arr) {
+  var start = 0
+  var end = arr.length - 1
   
   // 排除查找对象在数组之外
   if (target > arr[end] || target < arr[start]) {
@@ -443,14 +443,7 @@ function fib (n) {
 }
 
 // 硬币找零
-function makeCoin (coins, aim) {
-  let min = [], amount = 0
 
-  for (let i = 0; i < coins.length; i++) {
-    let coin = coins[i]
-
-  }
-}
 ```
 
 ---

@@ -235,7 +235,7 @@ Object.defineProperties({}, {
 
 ##### 6.8.1 原型属性
 
-`Object.getPrototypeOf()`查询对象原型，`p.isProtortpeOf(o)`检测p是否是o的原型
+`Object.isPrototypeOf()`查询对象原型，`p.isPrototypeOf(o)`检测p是否是o的原型
 
 ```
 var p = {x: 1}
@@ -320,14 +320,6 @@ Object.prototype.isPrototypeOf(o) // => true，p继承自Object.prototype
 6. 触发`DOMContentLoaded`事件，这标志程序冲同步脚本执行阶段转换为异步事件驱动阶段。注意，此时可能还有异步脚本没有执行完成
 7. 此时可能还在等待其他内容载入，如图片等。当所有内容完成载入、且脚本完成载入和执行，`document.readyState === 'complete'`，并触发window对象的load事件
 
-#### 13.6.2 同源策略
-
-包括协议、主机、端口等。
-
-* 跨域设置 `access-control-allow-origin: *`
-* 跨文档消息 `window.postMessage()`
-
-#### 13.6.4 跨站脚本(XSS)
 
 ### 15 脚本化文档
 
@@ -349,15 +341,4 @@ Node:
 * `nextSibling`、`previoursSibling`兄弟节点的前一个和后一个
 * `nodeType`
 * `nodeValue`
-* `nodeName` 
-
-#### 17.3.7 事件取消
-
-```
-function cancelEvent (event) {
-	var e = event || window.event // IE
-	if (e.preventDefault) e.preventDefault() //  标准技术
-	if (e.returnValue) e.returnValue = false // IE
-	return false
-}
-```
+* `nodeName`

@@ -136,3 +136,24 @@ function serialPromises(promises) {
     dispatch(0)
 }
 ```
+
+---
+
+<a id="promisify"></a>
+
+## promisify
+
+callback包装成promise
+
+```js
+// fs.read(param, function (err, data) {})
+function promisify (fn, context) {
+    return (...args) => {
+        return new Promise((resolve ,reject) => {
+            fn.apply(context, [...args, (err, res) => {
+                return err ? reject(err) : resolve(res)
+            }])
+        })
+    }
+}
+```
